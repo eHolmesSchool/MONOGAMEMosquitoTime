@@ -15,7 +15,7 @@ namespace MosquitoTime
         Sprite _sprite;
         Transform _transform;
 
-        public GameObject (Sprite sprite, Transform transform)
+        public GameObject(Sprite sprite, Transform transform)
         {
             _sprite = sprite;
             _transform = transform;
@@ -35,7 +35,7 @@ namespace MosquitoTime
         public void Update(GameTime gameTime)
         {
             _transform.CheckBounds(_sprite);
-            Move();
+                                                     Move(offset);
         }
         public void Draw()
         {
@@ -79,7 +79,7 @@ namespace MosquitoTime
     {
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(SpriteSheet, Bounds, );
+            spriteBatch.Draw(SpriteSheet, Bounds, Color.White);
 
         }
 
