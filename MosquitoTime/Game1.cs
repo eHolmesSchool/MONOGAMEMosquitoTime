@@ -9,6 +9,12 @@ namespace MosquitoTime
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+
+        Texture2D playerCannonTexture;
+
+        Player playerOne;
+        Controls playerControls;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -19,14 +25,17 @@ namespace MosquitoTime
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            playerControls = new Controls(Keyboard.GetState(0).IsKeyDown(Keys.Left) , Keyboard.GetState(0).IsKeyDown(Keys.Right), Keyboard.GetState(0).IsKeyDown(Keys.Space));
             base.Initialize();
+
+            playerCannonTexture = Content.Load<Texture2D>("Cannon");
+
+            playerOne = new Player(playerCannonTexture, new Vector2(50,50), playerControls);
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
             // TODO: use this.Content to load your game content here
         }
 
@@ -43,6 +52,7 @@ namespace MosquitoTime
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
 
             // TODO: Add your drawing code here
 
