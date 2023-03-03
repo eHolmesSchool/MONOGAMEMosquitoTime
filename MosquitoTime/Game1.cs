@@ -15,7 +15,6 @@ namespace MosquitoTime
         Transform testTransform;
         Sprite testSprite;
 
-
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
