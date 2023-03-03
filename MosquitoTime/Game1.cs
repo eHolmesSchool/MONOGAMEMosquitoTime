@@ -9,11 +9,12 @@ namespace MosquitoTime
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private Texture2D playerCannonTexture;
 
-        Texture2D playerCannonTexture;
+        GameObject testObject;
+        Transform testTransform;
+        Sprite testSprite;
 
-        Player playerOne;
-        Controls playerControls;
 
         public Game1()
         {
@@ -23,21 +24,22 @@ namespace MosquitoTime
         }
 
         protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-            playerControls = new Controls(Keyboard.GetState(0).IsKeyDown(Keys.Left) , Keyboard.GetState(0).IsKeyDown(Keys.Right), Keyboard.GetState(0).IsKeyDown(Keys.Space));
+        {// TODO: Add your initialization logic here
             base.Initialize();
 
-            playerCannonTexture = Content.Load<Texture2D>("Cannon");
-
-            playerOne = new Player(playerCannonTexture, new Vector2(50,50), playerControls);
+            testTransform = new Transform();
+            testSprite = new Sprite();
+            testObject = new GameObject(testSprite, testTransform);
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            playerCannonTexture = Content.Load<Texture2D>("");
             // TODO: use this.Content to load your game content here
         }
+
+
 
         protected override void Update(GameTime gameTime)
         {
@@ -47,13 +49,18 @@ namespace MosquitoTime
             // TODO: Add your update logic here
 
             base.Update(gameTime);
+
+            testObject.Update(gameTime);
         }
+
+
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-
+            _spriteBatch.Begin();
+            testObject.Update(gameTime);
+            _spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
