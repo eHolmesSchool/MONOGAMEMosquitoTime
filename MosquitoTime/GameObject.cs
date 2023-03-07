@@ -35,11 +35,9 @@ namespace MosquitoTime
         public void Update(GameTime gameTime)
         {
             _transform.CheckBounds(_sprite);
-                                                     Move(offset);
         }
         public void Draw()
         {
-            _sprite.Draw();
         }
     }
 

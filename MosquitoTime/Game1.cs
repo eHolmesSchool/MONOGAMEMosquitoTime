@@ -34,7 +34,7 @@ namespace MosquitoTime
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            playerCannonTexture = Content.Load<Texture2D>("");
+            playerCannonTexture = Content.Load<Texture2D>("Cannon");
             // TODO: use this.Content to load your game content here
         }
 
