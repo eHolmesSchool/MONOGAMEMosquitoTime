@@ -12,7 +12,6 @@ namespace MosquitoTime
 
     public class Player
     {
-
         Texture2D playerTexture;
         Rectangle playerRectangle;
         Controls playerControls;
