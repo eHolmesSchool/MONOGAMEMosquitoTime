@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace MosquitoTime
 {
@@ -35,9 +36,11 @@ namespace MosquitoTime
         public void Update(GameTime gameTime)
         {
             _transform.CheckBounds(_sprite);
+            //Move()
         }
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
+            //_sprite.Draw(spriteBatch);
         }
     }
 
@@ -96,5 +99,11 @@ namespace MosquitoTime
         {
             Bounds = new Rectangle();
         }
+
+
+        //public void UpdateBounds(Transform transform)
+        //{
+        //    Bounds = new Rectangle(transform.Position.ToPoint(), Bounds.Size);
+        //}
     }
 }
