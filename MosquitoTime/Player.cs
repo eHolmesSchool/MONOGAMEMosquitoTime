@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 namespace MosquitoTime
 {
 
-    public class Player
+    public class Player: GameObject
     {
         Texture2D playerTexture;
         Rectangle playerRectangle;
@@ -32,13 +32,13 @@ namespace MosquitoTime
 
 
 
-        public Player(Texture2D texture, Vector2 position, Controls controls /*Bullet */)
+        public Player(Sprite sprite, Transform transform, Controls controls) : base(sprite, transform)
         {
-            this.playerTexture = texture;
-            this.playerPosition = position;
+            this._transform = transform;
+            this._sprite = sprite;
             this.playerControls = controls;
 
-            playerRectangle = this.playerTexture.Bounds;
+            velocity = 4f;
         }
 
         public void Update(GameTime gameTime)

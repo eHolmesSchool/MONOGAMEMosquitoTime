@@ -9,12 +9,11 @@ namespace MosquitoTime
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+
         private Texture2D playerCannonTexture;
 
 
-
-
-        GameObject testObject;
+        Player testObject;
         Transform testTransform;
         Sprite testSprite;
 
@@ -29,9 +28,9 @@ namespace MosquitoTime
         {// TODO: Add your initialization logic here
             base.Initialize();
 
-            testTransform = new Transform();
-            testSprite = new Sprite();
-            testObject = new GameObject(testSprite, testTransform);
+            testTransform = new Transform(Vector2.Zero, Vector2.Zero, 0, 1 );
+            testSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
+            testObject = new Player(testSprite, testTransform, new Controls());
         }
 
         protected override void LoadContent()
@@ -60,7 +59,9 @@ namespace MosquitoTime
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
-            testObject.Update(gameTime);
+
+            testObject.Draw(_spriteBatch);///////////////////////////////////
+
             _spriteBatch.End();
             // TODO: Add your drawing code here
 

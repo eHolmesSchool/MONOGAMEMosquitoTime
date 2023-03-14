@@ -12,9 +12,8 @@ namespace MosquitoTime
 {
     public class GameObject
     {
-
-        Sprite _sprite;
-        Transform _transform;
+        public Sprite _sprite;
+        public Transform _transform;
 
         public GameObject(Sprite sprite, Transform transform)
         {
@@ -40,11 +39,9 @@ namespace MosquitoTime
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            //_sprite.Draw(spriteBatch);
+            _sprite.Draw(spriteBatch);
         }
     }
-
-
 
 
     public struct Transform
@@ -78,12 +75,6 @@ namespace MosquitoTime
 
     public struct Sprite
     {
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(SpriteSheet, Bounds, Color.White);
-
-        }
-
         public Sprite(Texture2D texture, Rectangle bounds, float scale)
         {
             this.SpriteSheet = texture;
@@ -95,15 +86,14 @@ namespace MosquitoTime
         public Rectangle Bounds;
         public float Scale;
 
-        public void UpdateBounds(Transform transform)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            Bounds = new Rectangle();
+            spriteBatch.Draw(SpriteSheet, Bounds, Color.White);
         }
 
-
-        //public void UpdateBounds(Transform transform)
-        //{
-        //    Bounds = new Rectangle(transform.Position.ToPoint(), Bounds.Size);
-        //}
+        public void UpdateBounds(Transform transform)
+        {
+            Bounds = new Rectangle(transform.Position.ToPoint(), Bounds.Size);
+        }
     }
 }
