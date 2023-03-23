@@ -31,7 +31,6 @@ namespace MosquitoTime
         //PlayerUpgradeState upgradeState;
         PlayerState currentplayerState = PlayerState.Alive;
 
-
         public Player(Sprite sprite, Transform transform, Controls controls) : base(sprite, transform)// Ask Angelo how Controls work
         {
             _transform = transform;
