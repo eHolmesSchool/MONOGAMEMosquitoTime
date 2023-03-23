@@ -46,30 +46,29 @@ namespace MosquitoTime
 
     public struct Transform
     {
-        public void TranslatePosition(Vector2 offset)
-        {
-            //Position = new Vector2(Position.X + offset.X, Position.Y + offset.Y);
-            Position += offset;
-        }
-
-        public bool CheckBounds(Sprite sprite)
-        {
-
-            return false;
-        }
+        public Vector2 Position;
+        public Vector2 Direction;
+        public float Rotation;
+        public float Scale;
 
         public Transform(Vector2 position, Vector2 direction, float rotation, float scale)
-        {
+        { //Constructor
             this.Position = position;
             this.Direction = direction;
             this.Rotation = rotation;
             this.Scale = scale;
         }
 
-        public Vector2 Position;
-        public Vector2 Direction;
-        public float Rotation;
-        public float Scale;
+        public void TranslatePosition(Vector2 offset)
+        { //We call this in Game1
+            //Position = new Vector2(Position.X + offset.X, Position.Y + offset.Y);
+            Position += offset;
+        }
+
+        public bool CheckBounds(Sprite sprite)
+        { //We call this in Game1
+            return false;
+        }
     }
 
 

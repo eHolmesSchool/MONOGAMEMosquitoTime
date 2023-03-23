@@ -34,9 +34,9 @@ namespace MosquitoTime
 
         public Player(Sprite sprite, Transform transform, Controls controls) : base(sprite, transform)
         {
-            this._transform = transform;
-            this._sprite = sprite;
-            this.playerControls = controls;
+            _transform = transform;
+            _sprite = sprite;
+            playerControls = controls;
 
             velocity = 4f;
         }
@@ -63,25 +63,22 @@ namespace MosquitoTime
         public void PlayerMove()
         {
             if (playerControls.positiveDirection)
-            {
-                //move right
+            {//move right
+
             } 
             if (playerControls.negativeDirection)
-            {
-                //move left
+            {//move left
+
             }
         }
 
         public void PlayerFire()
         {
             if (playerControls.wasFirePressedThisFrame)
-            {
-                //fire Bullet
+            {//Instantiate a moving Bullet
+
             }
         }
-
-
-
     }
 
     public struct Controls

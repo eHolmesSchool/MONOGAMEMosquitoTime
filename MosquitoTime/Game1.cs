@@ -26,11 +26,14 @@ namespace MosquitoTime
 
         protected override void Initialize()
         {// TODO: Add your initialization logic here
-            base.Initialize();
+            base.Initialize(); //Runs the LoadContent() function       
 
             testTransform = new Transform(Vector2.Zero, Vector2.Zero, 0, 1 );
             testSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
-            testObject = new Player(testSprite, testTransform, new Controls());
+            testObject = new Player(testSprite, testTransform, new Controls(
+                Keyboard.GetState().IsKeyDown(Keys.Left),//"up"
+                Keyboard.GetState().IsKeyDown(Keys.Right),//"down"
+                Keyboard.GetState().IsKeyDown(Keys.Space)));//"fire"
         }
 
         protected override void LoadContent()
@@ -47,8 +50,8 @@ namespace MosquitoTime
                 Exit();
 
             // TODO: Add your update logic here
-
             base.Update(gameTime);
+
 
             testObject.Update(gameTime);
         }
