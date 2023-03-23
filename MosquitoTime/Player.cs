@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace MosquitoTime
         PlayerState currentplayerState = PlayerState.Alive;
 
 
-        public Player(Sprite sprite, Transform transform, Controls controls) : base(sprite, transform)
+        public Player(Sprite sprite, Transform transform, Controls controls) : base(sprite, transform)// Ask Angelo how Controls work
         {
             _transform = transform;
             _sprite = sprite;
