@@ -57,7 +57,7 @@ namespace MosquitoTime
         public float Scale;
 
         public void UpdateBounds(Transform transform)
-        {   //Changes the location of the visual sprite based on a passed-in rectangle
+        {                    //Changes the location of the visual sprite based on a passed-in rectangle
             Bounds = new Rectangle(transform.Position.ToPoint(), Bounds.Size);
         }
 
@@ -89,7 +89,7 @@ namespace MosquitoTime
         }
 
         public bool CheckBounds(Sprite sprite)
-        { //////////////////////////////////////////collision
+        {                                              //////////////////////////////////////////collision
             return false;
         }
     }

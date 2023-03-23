@@ -10,13 +10,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MosquitoTime
 {
-
     public class Player: GameObject
     {
         Texture2D playerTexture;
         Rectangle playerRectangle;
-        Controls playerControls;
-        //Bullet playerBullet;
+        List<Controls> playerControlList = new List<Controls>();
+        //Projectile playerBullet;
         Vector2 playerPosition;
         Vector2 playerDirection;
         float velocity;
@@ -32,16 +31,17 @@ namespace MosquitoTime
         PlayerState currentplayerState = PlayerState.Alive;
 
 
-        public Player(Sprite sprite, Transform transform, Controls controls) : base(sprite, transform)// Ask Angelo how Controls work
+        public Player(Sprite sprite, Transform transform) : base(sprite, transform)  // Ask Angelo how Controls work
         {
-            _transform = transform;
             _sprite = sprite;
-            playerControls = controls;
+            _transform = transform;
 
             velocity = 4f;
+
+            playerControlList.Add(new Controls(Keys.D, Keys.A, Keys.W));
         }
 
-        public void Update(GameTime gameTime)
+        public new void Update(GameTime gameTime)
         {
             base.Update(gameTime); ///////////
             switch (currentplayerState)
@@ -59,40 +59,48 @@ namespace MosquitoTime
                 default:
                     break;
             }
-        }
+        } 
+        
+        /*
+         * 
+         * 
+         * 
+         *
+         *
+         *
+         */
+
 
         public void PlayerMove()
         {
-            if (playerControls.positiveDirection)
+   /////////////////////         if (playerControls.positiveDirection)
             {//move right
+                
                 _transform.TranslatePosition(new Vector2(velocity, 0)); //////////////////Figuring out how to make it move
             } 
-            if (playerControls.negativeDirection)
+  /////////////////////          if (playerControls.negativeDirection)
             {//move left
-                _transform.TranslatePosition(new Vector2(-velocity, 0)); /////////////////
+                _transform.TranslatePosition(new Vector2(-velocity, 0)); ////////////////
             }
         }
 
         public void PlayerFire()
         {
-            if (playerControls.wasFirePressedThisFrame)
+ ////////////////////           if (playerControls.wasFirePressedThisFrame)
             {//Instantiate a moving Bullet
-
+                //Google this later
             }
         }
     }
 
     public struct Controls
     {
-        public Controls(bool pos, bool neg, bool fire)
+        public Controls(Keys posEnum, Keys negEnum, Keys fire)
         {
-            this.positiveDirection = pos;
-            this.negativeDirection = neg;
-            this.wasFirePressedThisFrame = fire;
+            this.positiveDirection = (int)posEnum;
+            this.negativeDirection = (int)negEnum;
+            this.wasFirePressedThisFrame = (int)fire;
         }
-        public bool positiveDirection;
-        public bool negativeDirection;
-        public bool wasFirePressedThisFrame;
     }
 
     public enum PlayerUpgradeState

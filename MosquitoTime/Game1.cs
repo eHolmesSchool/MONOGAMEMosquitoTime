@@ -27,7 +27,7 @@ namespace MosquitoTime
         {// TODO: Add your initialization logic here
             base.Initialize(); //Runs the LoadContent() function       
 
-            testTransform = new Transform(new Vector2(30, 10), Vector2.Zero, 0, 1 );
+            testTransform = new Transform(new Vector2(30, 10), Vector2.Zero, 0, 1);
             testSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
             testObject = new Player(testSprite, testTransform, new Controls(
                 Keyboard.GetState().IsKeyDown(Keys.Left),//"pos" left
@@ -46,13 +46,15 @@ namespace MosquitoTime
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            {Exit();}
+
 
             // TODO: Add your update logic here
             base.Update(gameTime);
 
 
             testObject.Update(gameTime);
+
         }
 
 
