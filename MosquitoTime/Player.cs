@@ -31,7 +31,6 @@ namespace MosquitoTime
         PlayerState currentplayerState = PlayerState.Alive;
 
 
-
         public Player(Sprite sprite, Transform transform, Controls controls) : base(sprite, transform)
         {
             _transform = transform;
@@ -43,6 +42,7 @@ namespace MosquitoTime
 
         public void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             switch (currentplayerState)
             {
                 case PlayerState.Alive:
@@ -64,11 +64,11 @@ namespace MosquitoTime
         {
             if (playerControls.positiveDirection)
             {//move right
-
+                _transform.TranslatePosition(new Vector2(velocity, 0)); //////////////////Figuring out how to make it move
             } 
             if (playerControls.negativeDirection)
             {//move left
-
+                _transform.TranslatePosition(new Vector2(-velocity, 0)); /////////////////
             }
         }
 

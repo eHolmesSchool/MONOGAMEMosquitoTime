@@ -34,8 +34,8 @@ namespace MosquitoTime
 
         public void Update(GameTime gameTime)
         {
-            _transform.CheckBounds(_sprite);
-            //Move()
+            //_transform.CheckBounds(_sprite);
+            _sprite.UpdateBounds(_transform); 
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -43,6 +43,29 @@ namespace MosquitoTime
         }
     }
 
+    public struct Sprite
+    {
+        public Sprite(Texture2D texture, Rectangle bounds, float scale)
+        {
+            this.SpriteSheet = texture;
+            this.Bounds = bounds;
+            this.Scale = scale;
+        }
+
+        public Texture2D SpriteSheet;
+        public Rectangle Bounds;
+        public float Scale;
+
+        public void UpdateBounds(Transform transform)
+        {   //Changes the location of the visual sprite based on a passed-in rectangle
+            Bounds = new Rectangle(transform.Position.ToPoint(), Bounds.Size);
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(SpriteSheet, Bounds, Color.White);
+        }
+    }
 
     public struct Transform
     {
@@ -60,39 +83,14 @@ namespace MosquitoTime
         }
 
         public void TranslatePosition(Vector2 offset)
-        { //We call this in Game1
+        { //We call this in Game1(?)
             //Position = new Vector2(Position.X + offset.X, Position.Y + offset.Y);
             Position += offset;
         }
 
         public bool CheckBounds(Sprite sprite)
-        { //We call this in Game1
+        { //////////////////////////////////////////collision
             return false;
-        }
-    }
-
-
-    public struct Sprite
-    {
-        public Sprite(Texture2D texture, Rectangle bounds, float scale)
-        {
-            this.SpriteSheet = texture;
-            this.Bounds = bounds;
-            this.Scale = scale;
-        }
-
-        public Texture2D SpriteSheet;
-        public Rectangle Bounds;
-        public float Scale;
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(SpriteSheet, Bounds, Color.White);
-        }
-
-        public void UpdateBounds(Transform transform)
-        {
-            Bounds = new Rectangle(transform.Position.ToPoint(), Bounds.Size);
         }
     }
 }
