@@ -30,9 +30,9 @@ namespace MosquitoTime
             testTransform = new Transform(new Vector2(30, 10), Vector2.Zero, 0, 1 );
             testSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
             testObject = new Player(testSprite, testTransform, new Controls(
-                Keyboard.GetState().IsKeyDown(Keys.Left),//"up"
-                Keyboard.GetState().IsKeyDown(Keys.Right),//"down"
-                Keyboard.GetState().IsKeyDown(Keys.Space)));//"fire"
+                Keyboard.GetState().IsKeyDown(Keys.Left),//"pos" left
+                Keyboard.GetState().IsKeyDown(Keys.Right),//"neg" right
+                Keyboard.GetState().IsKeyDown(Keys.Space)));//"fire" fire
         }
 
         protected override void LoadContent()

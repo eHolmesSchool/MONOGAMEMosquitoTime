@@ -42,7 +42,7 @@ namespace MosquitoTime
 
         public void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
+            base.Update(gameTime); ///////////
             switch (currentplayerState)
             {
                 case PlayerState.Alive:
