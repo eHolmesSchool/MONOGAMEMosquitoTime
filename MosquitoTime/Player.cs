@@ -14,12 +14,15 @@ namespace MosquitoTime
     {
         Texture2D playerTexture;
         Rectangle playerRectangle;
-        List<Controls> playerControlList = new List<Controls>();
+        Controls playerControls = new Controls();
         //Projectile playerBullet;
         Vector2 playerPosition;
         Vector2 playerDirection;
         float velocity;
         float bounds;
+
+        KeyboardState kbs;
+        KeyboardState prevKbs; 
 
         int currentPlayerHealth;
         int maxPlayerHealth;
@@ -38,12 +41,15 @@ namespace MosquitoTime
 
             velocity = 4f;
 
-            playerControlList.Add(new Controls(Keys.D, Keys.A, Keys.W));
+            playerControls = new Controls(Keys.D, Keys.A, Keys.W); //no multiplayer (Right, Left, Fire)
         }
 
         public new void Update(GameTime gameTime)
         {
             base.Update(gameTime); ///////////
+
+            kbs = Keyboard.GetState(); 
+
             switch (currentplayerState)
             {
                 case PlayerState.Alive:
@@ -73,12 +79,14 @@ namespace MosquitoTime
 
         public void PlayerMove()
         {
-   /////////////////////         if (playerControls.positiveDirection)
+            
+            Debug.WriteLine(kbs.IsKeyDown(playerControls.positiveDirection));
+            if (kbs.IsKeyDown(Keys.D))
             {//move right
                 
                 _transform.TranslatePosition(new Vector2(velocity, 0)); //////////////////Figuring out how to make it move
             } 
-  /////////////////////          if (playerControls.negativeDirection)
+            if (kbs.IsKeyDown(playerControls.negativeDirection))
             {//move left
                 _transform.TranslatePosition(new Vector2(-velocity, 0)); ////////////////
             }
@@ -86,7 +94,7 @@ namespace MosquitoTime
 
         public void PlayerFire()
         {
- ////////////////////           if (playerControls.wasFirePressedThisFrame)
+            if (playerControls.wasFirePressedThisFrame > 0)
             {//Instantiate a moving Bullet
                 //Google this later
             }
@@ -95,11 +103,15 @@ namespace MosquitoTime
 
     public struct Controls
     {
+        public Keys positiveDirection;
+        public Keys negativeDirection;
+        public Keys wasFirePressedThisFrame;
+
         public Controls(Keys posEnum, Keys negEnum, Keys fire)
         {
-            this.positiveDirection = (int)posEnum;
-            this.negativeDirection = (int)negEnum;
-            this.wasFirePressedThisFrame = (int)fire;
+            this.positiveDirection = posEnum;
+            this.negativeDirection = negEnum;
+            this.wasFirePressedThisFrame = fire;
         }
     }
 
