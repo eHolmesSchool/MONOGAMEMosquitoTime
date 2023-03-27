@@ -27,7 +27,11 @@ namespace MosquitoTime
         {// TODO: Add your initialization logic here
             base.Initialize(); //Runs the LoadContent() function       
 
-            testTransform = new Transform(new Vector2(30, 10), Vector2.Zero, 0, 1);
+            _graphics.PreferredBackBufferWidth = 600;
+            _graphics.PreferredBackBufferHeight = 900;
+            _graphics.ApplyChanges();
+
+            testTransform = new Transform(new Vector2(300, 845), Vector2.Zero, 0, 1);
             testSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
             testObject = new Player(testSprite, testTransform);
         }

@@ -29,8 +29,5 @@ namespace MosquitoTime
 
             velocity = 4f;
         }
-
-
-
     }
 }

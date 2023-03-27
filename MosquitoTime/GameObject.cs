@@ -82,14 +82,15 @@ namespace MosquitoTime
             this.Scale = scale;
         }
 
-        public void TranslatePosition(Vector2 offset)
+        public void TranslatePosition(Vector2 offset) ///////////////////////OverRuled in Player.
+                                                      ///////////////////////Ill do this better in the future bur rn I'm panic coding a bit and generally not used to this yet.
         { //We call this in Game1(?)
             //Position = new Vector2(Position.X + offset.X, Position.Y + offset.Y);
             Position += offset;
         }
 
         public bool CheckBounds(Sprite sprite)
-        {                                              //////////////////////////////////////////collision
+        {                                              //////////////////////////////////////////collision   (?)
             return false;
         }
     }

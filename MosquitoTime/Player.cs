@@ -12,17 +12,20 @@ namespace MosquitoTime
 {
     public class Player: GameObject
     {
-        Texture2D playerTexture;
-        Rectangle playerRectangle;
+        Texture2D playerTexture; //covered by GameObject
+        Rectangle playerRectangle; //covered by GameObject
+        Vector2 playerPosition; //covered by GameObject
+        Vector2 playerDirection; //covered by GameObject
+
+
         Controls playerControls = new Controls();
         //Projectile playerBullet;
-        Vector2 playerPosition;
-        Vector2 playerDirection;
-        float velocity;
-        float bounds;
+        float velocity; //shouldve been covered by GameObject but we did movement in Player this time
+
+        float rightmostWall = 600; 
 
         KeyboardState kbs;
-        KeyboardState prevKbs; 
+        KeyboardState prevKbs; //used for Single Fire 
 
         int currentPlayerHealth;
         int maxPlayerHealth;
@@ -34,7 +37,7 @@ namespace MosquitoTime
         PlayerState currentplayerState = PlayerState.Alive;
 
 
-        public Player(Sprite sprite, Transform transform) : base(sprite, transform)  // Ask Angelo how Controls work
+        public Player(Sprite sprite, Transform transform) : base(sprite, transform)  // Ask Angelo how Controls work SOLVED ON MY OWN HELL YEAH
         {
             _sprite = sprite;
             _transform = transform;
@@ -79,16 +82,20 @@ namespace MosquitoTime
 
         public void PlayerMove()
         {
-            
             Debug.WriteLine(kbs.IsKeyDown(playerControls.positiveDirection));
             if (kbs.IsKeyDown(Keys.D))
             {//move right
-                
-                _transform.TranslatePosition(new Vector2(velocity, 0)); //////////////////Figuring out how to make it move
+                if (_sprite.Bounds.X + _sprite.Bounds.Width  !<= rightmostWall)
+                {
+                    _transform.TranslatePosition(new Vector2(velocity, 0)); //////////////////Figuring out how to make it move          FIGURED OUT
+                }
             } 
             if (kbs.IsKeyDown(playerControls.negativeDirection))
             {//move left
-                _transform.TranslatePosition(new Vector2(-velocity, 0)); ////////////////
+                if (_transform.Position.X - velocity !>= 0)
+                {
+                    _transform.TranslatePosition(new Vector2(-velocity, 0));
+                }
             }
         }
 
