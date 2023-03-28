@@ -80,7 +80,6 @@ namespace MosquitoTime
                 case GameState.Playing:
                     break;
                 case GameState.Paused:
-
                     break;
                 case GameState.GameOver:
                     break;
