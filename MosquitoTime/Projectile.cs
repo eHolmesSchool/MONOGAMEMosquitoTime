@@ -49,17 +49,25 @@ namespace MosquitoTime
             }
         }
 
+
+
         public new void ProjectileMove()
         {
             _transform.TranslatePosition(new Vector2(velocityX, velocityY)); 
         }
         //_transform.TranslatePosition(new Vector2(velocity, 0)); //////////////////Figuring out how to make it move          FIGURED OUT
+
+
+
+        public enum ProjectileState
+        {
+            None,
+            Alive,
+            Dead,
+        }
+
+
     }
 
-    public enum ProjectileState
-    {
-        None,
-        Alive,
-        Dead,
-    }
+
 }
