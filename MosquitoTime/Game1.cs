@@ -12,9 +12,9 @@ namespace MosquitoTime
         private Texture2D playerCannonTexture;
         private Texture2D backgroundTexture;
 
-        Player testObject;
-        Transform testTransform;
-        Sprite testSprite;
+        Player playerObject;
+        Transform playerTransform;
+        Sprite playerSprite;
 
         public Game1()
         {
@@ -32,9 +32,9 @@ namespace MosquitoTime
             _graphics.ApplyChanges();
 
            
-            testSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
-            testTransform = new Transform(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight - testSprite.Bounds.Height-26), Vector2.Zero, 0, 1);
-            testObject = new Player(testSprite, testTransform);
+            playerSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
+            playerTransform = new Transform(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight - playerSprite.Bounds.Height-26), Vector2.Zero, 0, 1);
+            playerObject = new Player(playerSprite, playerTransform);
         }
 
         protected override void LoadContent()
@@ -57,7 +57,7 @@ namespace MosquitoTime
             base.Update(gameTime);
 
 
-            testObject.Update(gameTime);
+            playerObject.Update(gameTime);
 
         }
 
@@ -71,7 +71,7 @@ namespace MosquitoTime
             _spriteBatch.Draw(backgroundTexture, new Vector2(0,0), Color.White);
 
 
-            testObject.Draw(_spriteBatch);///////////////////////////////////
+            playerObject.Draw(_spriteBatch);///////////////////////////////////
 
             _spriteBatch.End();
             // TODO: Add your drawing code here
