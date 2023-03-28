@@ -14,6 +14,9 @@ namespace MosquitoTime
         private Texture2D playerProjectile;
         private Texture2D enemyTexture;
         private Texture2D enemyProjectile;
+
+        GameState currentGameState = GameState.Playing;
+        Level currentLevel = Level.Level1;
         
 
         Transform playerTransform;
@@ -66,6 +69,26 @@ namespace MosquitoTime
             {Exit();}
 
 
+
+
+            switch (currentGameState)
+            {
+                case GameState.Start:
+                    break;
+                case GameState.LoadLevel:
+                    break;
+                case GameState.Playing:
+                    break;
+                case GameState.GameOver:
+                    break;
+                default:
+                    break;
+            }
+
+
+
+
+
             // TODO: Add your update logic here
             base.Update(gameTime);
 
@@ -92,5 +115,21 @@ namespace MosquitoTime
 
             base.Draw(gameTime);
         }
+
+
+        public enum GameState
+        {
+            Start,
+            LoadLevel,
+            Playing,
+            GameOver,
+        }
+
+        public enum Level
+        {
+            Level1,
+            Level2,
+        }
+
     }
 }
