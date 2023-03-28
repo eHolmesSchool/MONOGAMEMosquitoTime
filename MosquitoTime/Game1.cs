@@ -79,6 +79,9 @@ namespace MosquitoTime
                     break;
                 case GameState.Playing:
                     break;
+                case GameState.Paused:
+
+                    break;
                 case GameState.GameOver:
                     break;
                 default:
@@ -122,6 +125,7 @@ namespace MosquitoTime
             Start,
             LoadLevel,
             Playing,
+            Paused,
             GameOver,
         }
 
