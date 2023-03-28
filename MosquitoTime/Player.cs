@@ -82,7 +82,6 @@ namespace MosquitoTime
 
         public void PlayerMove()
         {
-            Debug.WriteLine(kbs.IsKeyDown(playerControls.positiveDirection));
             if (kbs.IsKeyDown(Keys.D))
             {//move right
                 if (_sprite.Bounds.X + _sprite.Bounds.Width  !<= rightmostWall)

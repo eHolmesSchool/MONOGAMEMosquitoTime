@@ -10,7 +10,7 @@ namespace MosquitoTime
         private SpriteBatch _spriteBatch;
 
         private Texture2D playerCannonTexture;
-
+        private Texture2D backgroundTexture;
 
         Player testObject;
         Transform testTransform;
@@ -28,11 +28,12 @@ namespace MosquitoTime
             base.Initialize(); //Runs the LoadContent() function       
 
             _graphics.PreferredBackBufferWidth = 600;
-            _graphics.PreferredBackBufferHeight = 900;
+            _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-            testTransform = new Transform(new Vector2(300, 845), Vector2.Zero, 0, 1);
+           
             testSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
+            testTransform = new Transform(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight - testSprite.Bounds.Height-26), Vector2.Zero, 0, 1);
             testObject = new Player(testSprite, testTransform);
         }
 
@@ -40,6 +41,8 @@ namespace MosquitoTime
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             playerCannonTexture = Content.Load<Texture2D>("Cannon");
+            backgroundTexture = Content.Load<Texture2D>("Background");
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -64,6 +67,9 @@ namespace MosquitoTime
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
+
+            _spriteBatch.Draw(backgroundTexture, new Vector2(0,0), Color.White);
+
 
             testObject.Draw(_spriteBatch);///////////////////////////////////
 
