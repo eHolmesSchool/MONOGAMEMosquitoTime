@@ -10,11 +10,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MosquitoTime
 {
-    public class Projectile: GameObject
+    public class Projectile : GameObject
     {
         Texture2D projectileTexture;
         Rectangle projectileRectangle;
-        
+
         Vector2 projectilePosition;
         Vector2 projectileDirection;
         float velocityX;
@@ -53,7 +53,7 @@ namespace MosquitoTime
 
         public new void ProjectileMove()
         {
-            _transform.TranslatePosition(new Vector2(velocityX, velocityY)); 
+            _transform.TranslatePosition(new Vector2(velocityX, velocityY));
         }
         //_transform.TranslatePosition(new Vector2(velocity, 0)); //////////////////Figuring out how to make it move          FIGURED OUT
 
@@ -65,9 +65,5 @@ namespace MosquitoTime
             Alive,
             Dead,
         }
-
-
     }
-
-
 }
