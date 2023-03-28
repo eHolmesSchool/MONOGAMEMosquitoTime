@@ -25,7 +25,7 @@ namespace MosquitoTime
 
         Transform enemyTransform;
         Sprite enemySprite;
-        Player enemyObject;
+        Enemy enemyObject;
 
 
         public Game1()
@@ -49,7 +49,7 @@ namespace MosquitoTime
 
             enemySprite = new Sprite(enemyTexture, enemyTexture.Bounds, 1);
             enemyTransform = new Transform(new Vector2(20,20), Vector2.Zero, 0, 1);
-            enemyObject = new Player(enemySprite, enemyTransform);
+            enemyObject = new Enemy(enemySprite, enemyTransform);
         }
 
         protected override void LoadContent()
@@ -97,6 +97,8 @@ namespace MosquitoTime
 
             playerObject.Update(gameTime);
 
+            //foreach Enemy in Enemy List
+            enemyObject.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)

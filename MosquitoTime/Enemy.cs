@@ -36,7 +36,7 @@ namespace MosquitoTime
 
         /// //////////////////////////////////////////////EnemyUpgradeState currentEnemyUpgradeState = EnemyUpgradeState.None;
         EnemyState currentState = EnemyState.Alive;
-        EnemyMovementState currentMovementState = EnemyMovementState.None;
+        EnemyMovementState currentMovementState = EnemyMovementState.Right;
 
         public Enemy(Sprite sprite, Transform transform) : base(sprite, transform)  // Ask Angelo how Controls work SOLVED ON MY OWN HELL YEAH
         {
