@@ -9,12 +9,21 @@ namespace MosquitoTime
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Texture2D playerCannonTexture;
         private Texture2D backgroundTexture;
+        private Texture2D playerCannonTexture;
+        private Texture2D playerProjectile;
+        private Texture2D enemyTexture;
+        private Texture2D enemyProjectile;
+        
 
-        Player playerObject;
         Transform playerTransform;
         Sprite playerSprite;
+        Player playerObject;
+
+        Transform enemyTransform;
+        Sprite enemySprite;
+        Player enemyObject;
+
 
         public Game1()
         {
@@ -31,10 +40,13 @@ namespace MosquitoTime
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-           
             playerSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
             playerTransform = new Transform(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight - playerSprite.Bounds.Height-26), Vector2.Zero, 0, 1);
             playerObject = new Player(playerSprite, playerTransform);
+
+            enemySprite = new Sprite(enemyTexture, enemyTexture.Bounds, 1);
+            enemyTransform = new Transform(new Vector2(20,20), Vector2.Zero, 0, 1);
+            enemyObject = new Player(enemySprite, enemyTransform);
         }
 
         protected override void LoadContent()
@@ -42,6 +54,7 @@ namespace MosquitoTime
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             playerCannonTexture = Content.Load<Texture2D>("Cannon");
             backgroundTexture = Content.Load<Texture2D>("Background");
+            enemyTexture = Content.Load<Texture2D>("Mosquito");
 
             // TODO: use this.Content to load your game content here
         }
@@ -61,8 +74,6 @@ namespace MosquitoTime
 
         }
 
-
-
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -72,6 +83,9 @@ namespace MosquitoTime
 
 
             playerObject.Draw(_spriteBatch);///////////////////////////////////
+
+            enemyObject.Draw(_spriteBatch);
+
 
             _spriteBatch.End();
             // TODO: Add your drawing code here
