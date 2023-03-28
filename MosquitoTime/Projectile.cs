@@ -17,17 +17,49 @@ namespace MosquitoTime
         
         Vector2 projectilePosition;
         Vector2 projectileDirection;
-        float velocity;
+        float velocityX;
+        float velocityY;
         float bounds;
 
         //projectileUpgradeState upgradeState;
+        ProjectileState currentprojectileState = ProjectileState.Alive;
 
         public Projectile(Sprite sprite, Transform transform) : base(sprite, transform)// Ask Angelo how Controls work
         {
             _transform = transform;
             _sprite = sprite;
 
-            velocity = 4f;
+
         }
+
+        public new void Update(GameTime gameTime)
+        {
+            base.Update(gameTime); ///////////
+
+            switch (currentprojectileState)
+            {
+                case ProjectileState.Alive:
+                    ProjectileMove();
+                    break;
+                case ProjectileState.Dead:
+                    //ASK ANGELO HOW TO GET AN OBJECT TO REMOVE ITSELF IN MONOGAME
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public new void ProjectileMove()
+        {
+            _transform.TranslatePosition(new Vector2(velocityX, velocityY)); 
+        }
+        //_transform.TranslatePosition(new Vector2(velocity, 0)); //////////////////Figuring out how to make it move          FIGURED OUT
+    }
+
+    public enum ProjectileState
+    {
+        None,
+        Alive,
+        Dead,
     }
 }

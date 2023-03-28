@@ -100,7 +100,7 @@ namespace MosquitoTime
 
         public void PlayerFire()
         {
-            if (playerControls.wasFirePressedThisFrame > 0)
+            if (kbs.IsKeyDown(playerControls.fireGunButton))
             {//Instantiate a moving Bullet
                 //Google this later
             }
@@ -111,13 +111,13 @@ namespace MosquitoTime
     {
         public Keys positiveDirection;
         public Keys negativeDirection;
-        public Keys wasFirePressedThisFrame;
+        public Keys fireGunButton;
 
         public Controls(Keys posEnum, Keys negEnum, Keys fire)
         {
             this.positiveDirection = posEnum;
             this.negativeDirection = negEnum;
-            this.wasFirePressedThisFrame = fire;
+            this.fireGunButton = fire;
         }
     }
 
