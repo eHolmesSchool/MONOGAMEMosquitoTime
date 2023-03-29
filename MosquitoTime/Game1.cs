@@ -125,8 +125,9 @@ namespace MosquitoTime
                     //foreach Player / Enemy Projectile
                     foreach (Projectile projectile in PlayerProjectileList)
                     {
-                        projectile.Update(gameTime);
+                        projectile.Update(gameTime, new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight));
                     }
+
                     foreach (Projectile projectile in EnemyProjectileList)
                     {
                         projectile.Update(gameTime);

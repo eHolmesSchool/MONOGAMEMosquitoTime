@@ -30,7 +30,7 @@ namespace MosquitoTime
 
         }
 
-        public new void Update(GameTime gameTime)
+        public new void Update(GameTime gameTime, Vector2 windowDimensions)
         {
             base.Update(gameTime); ///////////
 
@@ -38,6 +38,7 @@ namespace MosquitoTime
             {
                 case ProjectileState.Alive:
                     ProjectileMove();
+                    OutOfBoundsCheck(windowDimensions);
                     break;
                 case ProjectileState.Dead:
                     //Make It NOT Draw while dead and DO draw while alive  DONE
@@ -47,6 +48,13 @@ namespace MosquitoTime
             }
         }
 
+        private void OutOfBoundsCheck(Vector2 windowDimensions)
+        {
+            if(_sprite.Bounds.X <= 0 || _sprite.Bounds.Y <=0 || _sprite.Bounds.X + _sprite.Bounds.Width >= windowDimensions.X || _sprite.Bounds.Y + _sprite.Bounds.Height >= windowDimensions.Y)
+            {
+                this.currentProjectileState = ProjectileState.Dead;
+            }
+        }
 
         public void Initialize()                                     //Initialize the projectiles in GameState.Init
         {
