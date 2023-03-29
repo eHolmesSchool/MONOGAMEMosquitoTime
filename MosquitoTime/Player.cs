@@ -105,7 +105,7 @@ namespace MosquitoTime
                 {
                     if (bullet.currentProjectileState == Projectile.ProjectileState.Dead)
                     {
-                        bullet.Activate(_transform.Position);
+                        bullet.Activate(new Vector2(_sprite.Bounds.X + (_sprite.Bounds.Width / 2) - 2, _transform.Position.Y));
                         break;
                     }
                 }
