@@ -22,34 +22,37 @@ namespace MosquitoTime
         float bounds;
 
         //projectileUpgradeState upgradeState;
-        ProjectileState currentprojectileState = ProjectileState.Alive;
+        ProjectileState currentProjectileState = ProjectileState.Dead; //Defaults to Inactive
+
 
         public Projectile(Sprite sprite, Transform transform) : base(sprite, transform)// Ask Angelo how Controls work
         {
             _transform = transform;
             _sprite = sprite;
-
-
         }
 
         public new void Update(GameTime gameTime)
         {
             base.Update(gameTime); ///////////
 
-            switch (currentprojectileState)
+            switch (currentProjectileState)
             {
                 case ProjectileState.Alive:
                     ProjectileMove();
                     break;
                 case ProjectileState.Dead:
-                    //ASK ANGELO HOW TO GET AN OBJECT TO REMOVE ITSELF IN MONOGAME
+                    //Make It NOT Draw while dead and DO draw while alive
                     break;
                 default:
                     break;
             }
         }
 
-
+        public void Activate(Vector2 Position)
+        {
+            currentProjectileState = ProjectileState.Alive;
+            projectilePosition = Position;
+        }
 
         public new void ProjectileMove()
         {

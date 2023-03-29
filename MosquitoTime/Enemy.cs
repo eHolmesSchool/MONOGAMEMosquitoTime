@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MosquitoTime
 {
-    public class Enemy: GameObject
+    public class Enemy : GameObject
     {
 
         Texture2D playerTexture; //covered by GameObject
@@ -75,16 +75,16 @@ namespace MosquitoTime
             {
                 if (_sprite.Bounds.X + _sprite.Bounds.Width! <= rightmostWall)
                 {
-                    _transform.TranslatePosition(new Vector2(velocityX, 0)); 
+                    _transform.TranslatePosition(new Vector2(velocityX, 0));
                 }
                 else
                 {
                     currentMovementState = EnemyMovementState.Left;
                 }
             }
-            else if(currentMovementState == EnemyMovementState.Left)
+            else if (currentMovementState == EnemyMovementState.Left)
             {
-                if (_sprite.Bounds.X + _sprite.Bounds.Width! >= 0)
+                if (_sprite.Bounds.X! >= 0)
                 {
                     _transform.TranslatePosition(new Vector2(-velocityX, 0));
                 }

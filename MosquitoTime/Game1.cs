@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace MosquitoTime
 {
@@ -11,13 +12,12 @@ namespace MosquitoTime
 
         private Texture2D backgroundTexture;
         private Texture2D playerCannonTexture;
-        private Texture2D playerProjectile;
+        private Texture2D playerProjectileTexture;
         private Texture2D enemyTexture;
-        private Texture2D enemyProjectile;
+        private Texture2D enemyProjectileTexture;
 
         GameState currentGameState = GameState.Playing;
         Level currentLevel = Level.Level1;
-        
 
         Transform playerTransform;
         Sprite playerSprite;
@@ -27,6 +27,16 @@ namespace MosquitoTime
         Sprite enemySprite;
         Enemy enemyObject;
 
+        Sprite playerProjectileSprite;
+
+        Sprite enemyProjectileSprite;
+
+
+        List<Projectile> PlayerBulletList = new List<Projectile>(); //Remember, at GameStateInitialize, run the loop that fills this list
+        int playerBulletCount = 4;
+
+        List<Projectile> EnemyBulletList = new List<Projectile>();
+        int enemyBulletCount = 4;
 
         public Game1()
         {
@@ -50,6 +60,17 @@ namespace MosquitoTime
             enemySprite = new Sprite(enemyTexture, enemyTexture.Bounds, 1);
             enemyTransform = new Transform(new Vector2(20,20), Vector2.Zero, 0, 1);
             enemyObject = new Enemy(enemySprite, enemyTransform);
+
+
+            for (int bulletIndex = 0 ; bulletIndex < playerBulletCount; bulletIndex++) //Player Bullets
+            {
+                PlayerBulletList.Add(new Projectile(playerProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f)));
+            }
+
+            for (int bulletIndex = 0; bulletIndex < enemyBulletCount; bulletIndex++) //Enemy Bullets
+            {
+                EnemyBulletList.Add(new Projectile(enemyProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f)));
+            }
         }
 
         protected override void LoadContent()
@@ -58,7 +79,8 @@ namespace MosquitoTime
             playerCannonTexture = Content.Load<Texture2D>("Cannon");
             backgroundTexture = Content.Load<Texture2D>("Background");
             enemyTexture = Content.Load<Texture2D>("Mosquito");
-
+            playerProjectileTexture = Content.Load<Texture2D>("CannonBall");
+            enemyProjectileTexture = Content.Load<Texture2D>("Fireball");
             // TODO: use this.Content to load your game content here
         }
 
@@ -69,13 +91,11 @@ namespace MosquitoTime
             {Exit();}
 
 
-
-
             switch (currentGameState)
             {
                 case GameState.Start:
                     break;
-                case GameState.LoadLevel:
+                case GameState.InitLevel:
                     break;
                 case GameState.Playing:
                     break;
@@ -86,9 +106,6 @@ namespace MosquitoTime
                 default:
                     break;
             }
-
-
-
 
 
             // TODO: Add your update logic here
@@ -113,6 +130,15 @@ namespace MosquitoTime
 
             enemyObject.Draw(_spriteBatch);
 
+            /*foreach Projetile in Enemy Projectiles
+             * if ProjectileStatus = Alive
+             * projectile.Draw()
+             */
+            /*foreach Projetile in Player Projectiles
+            * if ProjectileStatus = Alive
+            * projectile.Draw()
+            */
+
 
             _spriteBatch.End();
             // TODO: Add your drawing code here
@@ -124,7 +150,7 @@ namespace MosquitoTime
         public enum GameState
         {
             Start,
-            LoadLevel,
+            InitLevel,
             Playing,
             Paused,
             GameOver,
