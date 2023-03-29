@@ -12,23 +12,22 @@ namespace MosquitoTime
 {
     public class Projectile : GameObject
     {
-        Texture2D projectileTexture;
-        Rectangle projectileRectangle;
 
-        Vector2 projectilePosition;
-        Vector2 projectileDirection;
-        float velocityX;
-        float velocityY;
+        float _velocityX;
+        float _velocityY;
         float bounds;
 
         //projectileUpgradeState upgradeState;
-        ProjectileState currentProjectileState = ProjectileState.Dead; //Defaults to Inactive
+        public ProjectileState currentProjectileState = ProjectileState.Dead; //Defaults to Inactive
 
 
-        public Projectile(Sprite sprite, Transform transform) : base(sprite, transform)// Ask Angelo how Controls work
+        public Projectile(Sprite sprite, Transform transform, float velocityX, float velocityY) : base(sprite, transform)// Ask Angelo how Controls work
         {
             _transform = transform;
             _sprite = sprite;
+            _velocityX = velocityX;
+            _velocityY = velocityY;
+
         }
 
         public new void Update(GameTime gameTime)
@@ -41,25 +40,30 @@ namespace MosquitoTime
                     ProjectileMove();
                     break;
                 case ProjectileState.Dead:
-                    //Make It NOT Draw while dead and DO draw while alive
+                    //Make It NOT Draw while dead and DO draw while alive  DONE
                     break;
                 default:
                     break;
             }
         }
 
+
+        public void Initialize()                                     //Initialize the projectiles in GameState.Init
+        {
+            currentProjectileState = ProjectileState.Dead;
+            _transform.Position = Vector2.Zero;
+        }
+
         public void Activate(Vector2 Position)
         {
+            _transform.Position = Position;
             currentProjectileState = ProjectileState.Alive;
-            projectilePosition = Position;
         }
 
-        public new void ProjectileMove()
+        public void ProjectileMove()
         {
-            _transform.TranslatePosition(new Vector2(velocityX, velocityY));
+            _transform.TranslatePosition(new Vector2(_velocityX, _velocityY));
         }
-        //_transform.TranslatePosition(new Vector2(velocity, 0)); //////////////////Figuring out how to make it move          FIGURED OUT
-
 
 
         public enum ProjectileState

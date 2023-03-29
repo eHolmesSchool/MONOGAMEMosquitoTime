@@ -10,48 +10,47 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MosquitoTime
 {
-    public class Player: GameObject
+    public class Player : GameObject
     {
-        Texture2D playerTexture; //covered by GameObject
-        Rectangle playerRectangle; //covered by GameObject
-        Vector2 playerPosition; //covered by GameObject
-        Vector2 playerDirection; //covered by GameObject
+        int currentPlayerHealth; //Not doing in this project
+        int maxPlayerHealth; //Not doing in this project
+        float fireRate; //Not doing in this project
 
 
         Controls playerControls = new Controls();
-        //Projectile playerBullet;
         float velocity; //shouldve been covered by GameObject but we did movement in Player this time
 
-        float rightmostWall = 600; 
+        float rightmostWall = 600;
 
         KeyboardState kbs;
-        KeyboardState prevKbs; //used for Single Fire 
+        KeyboardState prevKbs; //used to fire a Single bullet per keypress
 
-        int currentPlayerHealth;
-        int maxPlayerHealth;
-        float fireRate;
-        int currentPlayerAmmo;
+
+        //        int currentPlayerAmmo; 
+        List<Projectile> _playerBullets;
         int maxPlayerAmmo;
 
         //PlayerUpgradeState upgradeState;
         PlayerState currentplayerState = PlayerState.Alive;
 
 
-        public Player(Sprite sprite, Transform transform) : base(sprite, transform)  // Ask Angelo how Controls work SOLVED ON MY OWN HELL YEAH
+        public Player(Sprite sprite, Transform transform, List<Projectile> playerBullets) : base(sprite, transform)  // Ask Angelo how Controls work SOLVED ON MY OWN HELL YEAH
         {
             _sprite = sprite;
             _transform = transform;
+            _playerBullets = playerBullets;
+
 
             velocity = 4f;
 
             playerControls = new Controls(Keys.D, Keys.A, Keys.W); //no multiplayer (Right, Left, Fire)
         }
 
-        public new void Update(GameTime gameTime)
+        public new void Update(GameTime gameTime, List<Projectile> playerBullets)
         {
             base.Update(gameTime); ///////////
 
-            kbs = Keyboard.GetState(); 
+            kbs = Keyboard.GetState();
 
             switch (currentplayerState)
             {
@@ -68,8 +67,8 @@ namespace MosquitoTime
                 default:
                     break;
             }
-        } 
-        
+        }
+
         /*
          * 
          * 
@@ -84,14 +83,14 @@ namespace MosquitoTime
         {
             if (kbs.IsKeyDown(Keys.D))
             {//move right
-                if (_sprite.Bounds.X + _sprite.Bounds.Width  !<= rightmostWall)
+                if (_sprite.Bounds.X + _sprite.Bounds.Width! <= rightmostWall)
                 {
                     _transform.TranslatePosition(new Vector2(velocity, 0)); //////////////////Figuring out how to make it move          FIGURED OUT
                 }
-            } 
+            }
             if (kbs.IsKeyDown(playerControls.negativeDirection))
             {//move left
-                if (_transform.Position.X - velocity !>= 0)
+                if (_transform.Position.X - velocity! >= 0)
                 {
                     _transform.TranslatePosition(new Vector2(-velocity, 0));
                 }
@@ -102,7 +101,14 @@ namespace MosquitoTime
         {
             if (kbs.IsKeyDown(playerControls.fireGunButton))
             {//Instantiate a moving Bullet
-                //Google this later
+                foreach (Projectile bullet in _playerBullets)
+                {
+                    if (bullet.currentProjectileState == Projectile.ProjectileState.Dead)
+                    {
+                        bullet.Activate(_transform.Position);
+                        break;
+                    }
+                }
             }
         }
     }

@@ -16,7 +16,7 @@ namespace MosquitoTime
         private Texture2D enemyTexture;
         private Texture2D enemyProjectileTexture;
 
-        GameState currentGameState = GameState.Playing;
+        GameState currentGameState = GameState.Start;
         Level currentLevel = Level.Level1;
 
         Transform playerTransform;
@@ -28,15 +28,21 @@ namespace MosquitoTime
         Enemy enemyObject;
 
         Sprite playerProjectileSprite;
+        float playerProjectileVeloX;
+        float playerProjectileVeloY;
 
         Sprite enemyProjectileSprite;
+        float enemyProjectileVeloX;
+        float enemyProjectileVeloY;
+        float specialEnemyProjectileVeloX;
+        float specialEnemyProjectileVeloY;
 
+        public List<Projectile> PlayerProjectileList = new List<Projectile>(); //Remember, at GameState.Initialize, run the loop that fills this list
+        int playerProjectileCount = 4;
 
-        List<Projectile> PlayerBulletList = new List<Projectile>(); //Remember, at GameStateInitialize, run the loop that fills this list
-        int playerBulletCount = 4;
+        List<Projectile> EnemyProjectileList = new List<Projectile>();
+        int enemyProjectileCount = 4;
 
-        List<Projectile> EnemyBulletList = new List<Projectile>();
-        int enemyBulletCount = 4;
 
         public Game1()
         {
@@ -55,22 +61,21 @@ namespace MosquitoTime
 
             playerSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
             playerTransform = new Transform(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight - playerSprite.Bounds.Height-26), Vector2.Zero, 0, 1);
-            playerObject = new Player(playerSprite, playerTransform);
+            playerObject = new Player(playerSprite, playerTransform, PlayerProjectileList); /////
 
             enemySprite = new Sprite(enemyTexture, enemyTexture.Bounds, 1);
             enemyTransform = new Transform(new Vector2(20,20), Vector2.Zero, 0, 1);
-            enemyObject = new Enemy(enemySprite, enemyTransform);
+            enemyObject = new Enemy(enemySprite, enemyTransform); /////
 
+            playerProjectileSprite = new Sprite(playerProjectileTexture, playerProjectileTexture.Bounds, 1);
+            playerProjectileVeloX = 0f;// negative because these move upwards
+            playerProjectileVeloY = -2f;
 
-            for (int bulletIndex = 0 ; bulletIndex < playerBulletCount; bulletIndex++) //Player Bullets
-            {
-                PlayerBulletList.Add(new Projectile(playerProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f)));
-            }
-
-            for (int bulletIndex = 0; bulletIndex < enemyBulletCount; bulletIndex++) //Enemy Bullets
-            {
-                EnemyBulletList.Add(new Projectile(enemyProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f)));
-            }
+            enemyProjectileSprite = new Sprite(enemyProjectileTexture, enemyProjectileTexture.Bounds, 1);
+            enemyProjectileVeloX = 0f; // positive because these move downwards
+            enemyProjectileVeloY = 2f;
+            specialEnemyProjectileVeloX = 1.5f; // Special enemies bullets move diagonally. May not use when I hand this in the first time but will use
+            specialEnemyProjectileVeloY = 1.5f; // if I am able to hand this in again for bonus marks later
         }
 
         protected override void LoadContent()
@@ -94,10 +99,43 @@ namespace MosquitoTime
             switch (currentGameState)
             {
                 case GameState.Start:
+                    currentGameState = GameState.InitLevel;
                     break;
                 case GameState.InitLevel:
+
+                    for (int ProjectileIndex = 0; ProjectileIndex < playerProjectileCount; ProjectileIndex++) //Player Projectiles
+                    {
+                        PlayerProjectileList.Add(new Projectile(playerProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), playerProjectileVeloX, playerProjectileVeloY));
+                    }
+
+                    for (int ProjectileIndex = 0; ProjectileIndex < enemyProjectileCount; ProjectileIndex++) //Enemy Projectiles
+                    {
+                        EnemyProjectileList.Add(new Projectile(enemyProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), enemyProjectileVeloX, enemyProjectileVeloY));
+                    }
+
+                    currentGameState = GameState.Playing;
                     break;
                 case GameState.Playing:
+
+
+                    playerObject.Update(gameTime, PlayerProjectileList); /////We may only have to pass in the list once at the beginning, or we may have to do it every frame
+                    //foreach Enemy in Enemy List
+                    enemyObject.Update(gameTime);
+
+                    //foreach Player / Enemy Projectile
+                    foreach (Projectile projectile in PlayerProjectileList)
+                    {
+                        projectile.Update(gameTime);
+                    }
+                    foreach (Projectile projectile in EnemyProjectileList)
+                    {
+                        projectile.Update(gameTime);
+                    }
+
+
+                    //If caps button pressed, go to pause
+                    //If player is hit, go to Game Over
+                    //If player kills all enemies, set current Level to 2 and go to Init level
                     break;
                 case GameState.Paused:
                     break;
@@ -112,10 +150,7 @@ namespace MosquitoTime
             base.Update(gameTime);
 
 
-            playerObject.Update(gameTime);
 
-            //foreach Enemy in Enemy List
-            enemyObject.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -123,26 +158,47 @@ namespace MosquitoTime
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
 
-            _spriteBatch.Draw(backgroundTexture, new Vector2(0,0), Color.White);
+            // TODO: Add your drawing code here
 
 
-            playerObject.Draw(_spriteBatch);///////////////////////////////////
+            switch (currentGameState)
+            {
+                case GameState.Start:
+                    break;
+                case GameState.InitLevel:
+                    break;
+                case GameState.Playing:
 
-            enemyObject.Draw(_spriteBatch);
+                    _spriteBatch.Draw(backgroundTexture, new Vector2(0, 0), Color.White);
 
-            /*foreach Projetile in Enemy Projectiles
-             * if ProjectileStatus = Alive
-             * projectile.Draw()
-             */
-            /*foreach Projetile in Player Projectiles
-            * if ProjectileStatus = Alive
-            * projectile.Draw()
-            */
+                    playerObject.Draw(_spriteBatch);///////////////////////////////////
+
+                    enemyObject.Draw(_spriteBatch);
+
+                    /*foreach Projetile in Enemy Projectiles
+                     * if ProjectileStatus = Alive
+                     * projectile.Draw()
+                     */
+
+                    foreach (Projectile playerProjectile in PlayerProjectileList)
+                    {
+                        if (playerProjectile.currentProjectileState == Projectile.ProjectileState.Alive)
+                        {
+                            playerProjectile.Draw(_spriteBatch);
+                        }
+                    }
+
+                    break;
+                case GameState.Paused:
+                    break;
+                case GameState.GameOver:
+                    break;
+                default:
+                    break;
+            }
 
 
             _spriteBatch.End();
-            // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
 

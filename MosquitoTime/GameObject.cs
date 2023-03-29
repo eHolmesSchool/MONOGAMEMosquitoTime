@@ -57,7 +57,7 @@ namespace MosquitoTime
         public float Scale;
 
         public void UpdateBounds(Transform transform)
-        {                    //Changes the location of the visual sprite based on a passed-in rectangle
+        {                    //Changes the location of the visual sprite based on a passed-in rectangle   (?)
             Bounds = new Rectangle(transform.Position.ToPoint(), Bounds.Size);
         }
 
@@ -82,10 +82,8 @@ namespace MosquitoTime
             this.Scale = scale;
         }
 
-        public void TranslatePosition(Vector2 offset) ///////////////////////OverRuled in Player.
-                                                      ///////////////////////Ill do this better in the future bur rn I'm panic coding a bit and generally not used to this yet.
-        { //We call this in Game1(?)
-            //Position = new Vector2(Position.X + offset.X, Position.Y + offset.Y);
+        public void TranslatePosition(Vector2 offset) //Accidentally wrote a different function to cover movemetn in some of the child classes
+        {
             Position += offset;
         }
 
