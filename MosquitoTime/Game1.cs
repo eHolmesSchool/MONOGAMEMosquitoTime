@@ -25,7 +25,6 @@ namespace MosquitoTime
 
         Transform enemyTransform;
         Sprite enemySprite;
-        Enemy enemyObject;
 
         Sprite playerProjectileSprite;
         float playerProjectileVeloX;
@@ -42,6 +41,8 @@ namespace MosquitoTime
 
         public List<Projectile> EnemyProjectileList = new List<Projectile>();
         int enemyProjectileCount = 4;
+
+        public List<Enemy> EnemyList = new List<Enemy>();
 
         public Game1()
         {
@@ -64,7 +65,6 @@ namespace MosquitoTime
 
             enemySprite = new Sprite(enemyTexture, enemyTexture.Bounds, 1);
             enemyTransform = new Transform(new Vector2(20,20), Vector2.Zero, 0, 1);
-            enemyObject = new Enemy(enemySprite, enemyTransform); /////
 
             playerProjectileSprite = new Sprite(playerProjectileTexture, playerProjectileTexture.Bounds, 1);
             playerProjectileVeloX = 0f;// negative because these move upwards
@@ -112,16 +112,22 @@ namespace MosquitoTime
                         EnemyProjectileList.Add(new Projectile(enemyProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), enemyProjectileVeloX, enemyProjectileVeloY));
                     }
 
-
+                    for (int EnemyIndex = 0; EnemyIndex < enemyProjectileCount; EnemyIndex++) //Enemies
+                    {
+                        EnemyList.Add(new Enemy(enemySprite, enemyTransform));
+                    }
 
                     currentGameState = GameState.Playing;
                     break;
                 case GameState.Playing:
 
-
                     playerObject.Update(gameTime, PlayerProjectileList); /////We may only have to pass in the list once at the beginning, or we may have to do it every frame
-                    //foreach Enemy in Enemy List
-                    enemyObject.Update(gameTime);
+
+                    
+                    foreach(Enemy enemy in EnemyList)
+                    {
+                        enemy.Update(gameTime);
+                    }
 
                     //foreach Player / Enemy Projectile
                     foreach (Projectile projectile in PlayerProjectileList)
@@ -175,7 +181,13 @@ namespace MosquitoTime
 
                     playerObject.Draw(_spriteBatch);///////////////////////////////////
 
-                    enemyObject.Draw(_spriteBatch);
+                    foreach (Enemy enemy in EnemyList)
+                    {
+                        if (enemy.currentState == Enemy.EnemyState.Alive)
+                        {
+                            enemy.Draw(_spriteBatch);
+                        }
+                    }
 
                     /*foreach Projetile in Enemy Projectiles
                      * if ProjectileStatus = Alive
