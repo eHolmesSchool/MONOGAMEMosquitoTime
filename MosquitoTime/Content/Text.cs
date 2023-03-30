@@ -16,14 +16,13 @@ namespace MosquitoTime.Content
         public string _text;
         public Transform _transform; //includes: position, direction, rotation, scale
 
-
-        public Text(SpriteFont font, string text, Transform transform)
+        public Text(SpriteFont font, string text, Text.Transform transform)
         {
             _font = font;
             _text = text;
             _transform = transform;
         }
-        
+
 
         public struct Transform
         {

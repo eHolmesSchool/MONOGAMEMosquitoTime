@@ -12,9 +12,9 @@ namespace MosquitoTime
 {
     public class Player : GameObject
     {
-        int currentPlayerHealth; //Not doing in this project
-        int maxPlayerHealth; //Not doing in this project
-        float fireRate; //Not doing in this project
+        int maxPlayerHealth;
+        int currentPlayerHealth;   
+        float fireRate;             //Not used in this version
 
 
         Controls playerControls = new Controls();
@@ -26,10 +26,9 @@ namespace MosquitoTime
         KeyboardState prevKbs; //used to fire a Single bullet per keypress
 
 
-        //        int currentPlayerAmmo; 
         List<Projectile> _playerBullets;
-        int maxPlayerAmmo;
-        int currentAmmo;
+        int maxPlayerAmmo;          //Not used in this version
+        int currentAmmo;            //Not used in this version
 
         //PlayerUpgradeState upgradeState;
 
@@ -39,10 +38,15 @@ namespace MosquitoTime
             _transform = transform;
             _playerBullets = playerBullets;
 
+            
+            ///// move everything below this line into an Initialize() function called by the constructor and the Init gamestate
             velocity = 4f;
 
             currentState = ObjectState.Alive;
             playerControls = new Controls(Keys.D, Keys.A, Keys.W); //no multiplayer (Right, Left, Fire)
+
+            maxPlayerHealth = 3;
+            currentPlayerHealth = maxPlayerHealth;
         }
 
         public new void Update(GameTime gameTime)//new keyword required since this and Base.Update have identical parameters
@@ -100,6 +104,15 @@ namespace MosquitoTime
                         break;
                     }
                 }
+            }
+        }
+
+        public new void Collision()
+        {
+            currentPlayerHealth--;
+            if (currentPlayerHealth <= 0)
+            {
+                currentState = GameObject.ObjectState.Dead;
             }
         }
     }

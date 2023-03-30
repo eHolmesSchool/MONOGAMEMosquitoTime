@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MosquitoTime.Content;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,10 +45,13 @@ namespace MosquitoTime
         Transform barrierTransform;
         Sprite barrierSprite;
 
-        Transform textTransform;
+        Text.Transform textTransform;
         string textMessage;
+        Vector2 textOffset = new Vector2(45, 30);
 
 
+
+        public Text playerLifeCounter;
 
         public List<Projectile> PlayerProjectileList = new List<Projectile>(); //Remember, at GameState.Initialize, run the loop that fills this list
         int playerProjectileCount = 4;
@@ -97,7 +101,7 @@ namespace MosquitoTime
             barrierSprite = new Sprite(barrierTexture, barrierTexture.Bounds, 1);
             barrierTransform = new Transform(new Vector2(75, 350), Vector2.Zero, 0, 1);
 
-            textTransform = new Transform();
+            textTransform = new Text.Transform(new Vector2(75, 30), Vector2.Zero, 0, 1);
             textMessage = "Hello World!";
         }
 
@@ -188,6 +192,7 @@ namespace MosquitoTime
 
         private void InitAll()
         {
+            playerLifeCounter = new Text(arial,textMessage, textTransform);
             //add nested switch case that takes in Level1, Level2 etc.
             for (int projectileIndex = 0; projectileIndex < playerProjectileCount; projectileIndex++) //Player Projectiles
             {
@@ -208,8 +213,6 @@ namespace MosquitoTime
             {
                 BarrierList.Add(new Barrier(barrierSprite, new Transform(new Vector2(barrierTransform.Position.X + (barrierIndex * 300), barrierTransform.Position.Y), Vector2.Zero, 0f, 1f)));
             }
-
-
         }
 
         private void AddListsOfCollidableObjectsToEachObject()
@@ -253,7 +256,7 @@ namespace MosquitoTime
             }
 
             for (int listIndex = 0; listIndex < BarrierList.Count; listIndex++)
-            {//Barriers have no reaction to any collision
+            {//Barriers have no reaction to any collision for now so no code is needed here
                 //foreach (GameObject obj in  ...List)
                 //{
                 //    BarrierList[listIndex]._collidableObjects.Add(obj);
@@ -264,7 +267,6 @@ namespace MosquitoTime
         private void AllTheCollisionChecks()
         {
             List<GameObject> AllList = new List<GameObject>();
-
 
             AllList.Add(playerObject);
             AllList.AddRange(EnemyList);
@@ -281,10 +283,9 @@ namespace MosquitoTime
                     {
                         if (OGobj.OnCollide(collisionCheckedObj._sprite.Bounds))
                         {
-                            OGobj.currentState = GameObject.ObjectState.Dead;
+                            OGobj.Collision();
                         }
                     }
-
                 }
             }
         }
@@ -296,6 +297,8 @@ namespace MosquitoTime
             {
                 playerObject.Draw(spriteBatch);///////////////////////////////////
             }
+            //Drawing playerLifeCounter on near the player, offset by a set amount
+            spriteBatch.DrawString(playerLifeCounter._font, playerLifeCounter._text, playerObject._transform.Position + textOffset, Color.Black );
 
             foreach (Enemy enemy in EnemyList)
             {
@@ -349,6 +352,7 @@ namespace MosquitoTime
             {
                 bar.Update(gameTime);
             }
+
         }
 
 
