@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MosquitoTime
 {
@@ -210,25 +211,44 @@ namespace MosquitoTime
 
         private void AddListsOfCollidableObjectsToEachObject()
         {
+            
             //add nested switch case that takes in Level1, Level2 etc.
-            for (int projectileIndex = 0; projectileIndex < playerProjectileCount; projectileIndex++) //Player Projectiles
-            {
-                PlayerProjectileList.Add(new Projectile(playerProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), playerProjectileVeloX, playerProjectileVeloY));
+            for (int listIndex = 0; listIndex < PlayerProjectileList.Count; listIndex++)
+            {//Player Projectiles have a reaction when they collide with Enemies and Barriers. 
+                foreach (GameObject obj in EnemyList)
+                {
+                    PlayerProjectileList[listIndex]._collidableObjects.Add(obj);
+                }
+                foreach (GameObject obj in BarrierList)
+                {
+                    PlayerProjectileList[listIndex]._collidableObjects.Add(obj);
+                }
             }
 
-            for (int projectileIndex = 0; projectileIndex < enemyProjectileCount; projectileIndex++) //Enemy Projectiles
-            {
-                EnemyProjectileList.Add(new Projectile(enemyProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), enemyProjectileVeloX, enemyProjectileVeloY));
+            for (int listIndex = 0; listIndex < EnemyProjectileList.Count; listIndex++)
+            {//Enemy Projectiles have a reaction when they collide with the Player and Barriers
+
+                EnemyProjectileList[listIndex]._collidableObjects.Add(playerObject);
+                foreach (GameObject obj in BarrierList)
+                {
+                    EnemyProjectileList[listIndex]._collidableObjects.Add(obj);
+                }
             }
 
-            for (int enemyIndex = 0; enemyIndex < enemyCount; enemyIndex++) //Enemies
-            {
-                EnemyList.Add(new Enemy(enemySprite, new Transform(new Vector2(enemyTransform.Position.X + (enemyIndex * 30), enemyTransform.Position.Y + (enemyIndex * 30)), Vector2.Zero, 0f, 1f)));
+            for (int listIndex = 0; listIndex < EnemyList.Count; listIndex++)
+            {//Enemies have a reaction when they collide with the Player Projectiles
+                foreach (GameObject obj in PlayerProjectileList)
+                {
+                    EnemyList[listIndex]._collidableObjects.Add(obj);
+                }
             }
 
-            for (int barrierIndex = 0; barrierIndex < barrierCount; barrierIndex++)
-            {
-                BarrierList.Add(new Barrier(barrierSprite, new Transform(new Vector2(barrierTransform.Position.X + (barrierIndex * 300), barrierTransform.Position.Y), Vector2.Zero, 0f, 1f)));
+            for (int listIndex = 0; listIndex < BarrierList.Count; listIndex++)
+            {//Barriers have no reaction to any collision
+                //foreach (GameObject obj in  ...List)
+                //{
+                //    BarrierList[listIndex]._collidableObjects.Add(obj);
+                //}
             }
         }
 

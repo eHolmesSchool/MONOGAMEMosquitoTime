@@ -21,6 +21,8 @@ namespace MosquitoTime
         {
             _sprite = sprite;
             _transform = transform;
+
+            _collidableObjects = new List<GameObject>();
         }
 
         public bool OnCollide(Rectangle otherBounds)
