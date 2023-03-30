@@ -114,7 +114,4 @@ namespace MosquitoTime
             return false;
         }
     }
-
-
-
 }

@@ -29,10 +29,10 @@ namespace MosquitoTime
         //        int currentPlayerAmmo; 
         List<Projectile> _playerBullets;
         int maxPlayerAmmo;
+        int currentAmmo;
 
         //PlayerUpgradeState upgradeState;
         ObjectState currentplayerState = ObjectState.Alive;
-
 
         public Player(Sprite sprite, Transform transform, List<Projectile> playerBullets) : base(sprite, transform)  // Ask Angelo how Controls work SOLVED ON MY OWN HELL YEAH
         {
