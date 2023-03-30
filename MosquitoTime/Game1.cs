@@ -17,7 +17,7 @@ namespace MosquitoTime
         private Texture2D enemyProjectileTexture;
 
         GameState currentGameState = GameState.Start;
-        Level currentLevel = Level.Level1; ///            /////////                //////
+        Level currentLevel = Level.None; ///            /////////                //////
 
         Transform playerTransform;
         Sprite playerSprite;
@@ -228,6 +228,7 @@ namespace MosquitoTime
 
         public enum Level
         {
+            None,
             Level1,
             Level2,
         }
