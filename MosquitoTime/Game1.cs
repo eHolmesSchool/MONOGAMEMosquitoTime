@@ -118,6 +118,7 @@ namespace MosquitoTime
                 case GameState.InitLevel:
 
                     InitAllLists();
+                    AddListsOfCollidableObjectsToEachObject();
 
                     currentGameState = GameState.Playing;
                     break;
@@ -147,31 +148,6 @@ namespace MosquitoTime
 
 
         }
-
-        private void InitAllLists()
-        {
-            //add nested switch case that takes in Level1, Level2 etc.
-            for (int projectileIndex = 0; projectileIndex < playerProjectileCount; projectileIndex++) //Player Projectiles
-            {
-                PlayerProjectileList.Add(new Projectile(playerProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), playerProjectileVeloX, playerProjectileVeloY));
-            }
-
-            for (int projectileIndex = 0; projectileIndex < enemyProjectileCount; projectileIndex++) //Enemy Projectiles
-            {
-                EnemyProjectileList.Add(new Projectile(enemyProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), enemyProjectileVeloX, enemyProjectileVeloY));
-            }
-
-            for (int enemyIndex = 0; enemyIndex < enemyCount; enemyIndex++) //Enemies
-            {
-                EnemyList.Add(new Enemy(enemySprite, new Transform(new Vector2(enemyTransform.Position.X + (enemyIndex * 30), enemyTransform.Position.Y + (enemyIndex * 30)), Vector2.Zero, 0f, 1f)));
-            }
-
-            for (int barrierIndex = 0; barrierIndex < barrierCount; barrierIndex++)
-            {
-                BarrierList.Add(new Barrier(barrierSprite, new Transform(new Vector2(barrierTransform.Position.X + (barrierIndex * 300), barrierTransform.Position.Y), Vector2.Zero, 0f, 1f)));
-            }
-        }
-
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -200,12 +176,61 @@ namespace MosquitoTime
                 default:
                     break;
             }
-
-
             _spriteBatch.End();
             base.Draw(gameTime);
         }
 
+
+
+
+
+        private void InitAllLists()
+        {
+            //add nested switch case that takes in Level1, Level2 etc.
+            for (int projectileIndex = 0; projectileIndex < playerProjectileCount; projectileIndex++) //Player Projectiles
+            {
+                PlayerProjectileList.Add(new Projectile(playerProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), playerProjectileVeloX, playerProjectileVeloY));
+            }
+
+            for (int projectileIndex = 0; projectileIndex < enemyProjectileCount; projectileIndex++) //Enemy Projectiles
+            {
+                EnemyProjectileList.Add(new Projectile(enemyProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), enemyProjectileVeloX, enemyProjectileVeloY));
+            }
+
+            for (int enemyIndex = 0; enemyIndex < enemyCount; enemyIndex++) //Enemies
+            {
+                EnemyList.Add(new Enemy(enemySprite, new Transform(new Vector2(enemyTransform.Position.X + (enemyIndex * 30), enemyTransform.Position.Y + (enemyIndex * 30)), Vector2.Zero, 0f, 1f)));
+            }
+
+            for (int barrierIndex = 0; barrierIndex < barrierCount; barrierIndex++)
+            {
+                BarrierList.Add(new Barrier(barrierSprite, new Transform(new Vector2(barrierTransform.Position.X + (barrierIndex * 300), barrierTransform.Position.Y), Vector2.Zero, 0f, 1f)));
+            }
+        }
+
+        private void AddListsOfCollidableObjectsToEachObject()
+        {
+            //add nested switch case that takes in Level1, Level2 etc.
+            for (int projectileIndex = 0; projectileIndex < playerProjectileCount; projectileIndex++) //Player Projectiles
+            {
+                PlayerProjectileList.Add(new Projectile(playerProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), playerProjectileVeloX, playerProjectileVeloY));
+            }
+
+            for (int projectileIndex = 0; projectileIndex < enemyProjectileCount; projectileIndex++) //Enemy Projectiles
+            {
+                EnemyProjectileList.Add(new Projectile(enemyProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), enemyProjectileVeloX, enemyProjectileVeloY));
+            }
+
+            for (int enemyIndex = 0; enemyIndex < enemyCount; enemyIndex++) //Enemies
+            {
+                EnemyList.Add(new Enemy(enemySprite, new Transform(new Vector2(enemyTransform.Position.X + (enemyIndex * 30), enemyTransform.Position.Y + (enemyIndex * 30)), Vector2.Zero, 0f, 1f)));
+            }
+
+            for (int barrierIndex = 0; barrierIndex < barrierCount; barrierIndex++)
+            {
+                BarrierList.Add(new Barrier(barrierSprite, new Transform(new Vector2(barrierTransform.Position.X + (barrierIndex * 300), barrierTransform.Position.Y), Vector2.Zero, 0f, 1f)));
+            }
+        }
 
         private void AllTheDrawing(SpriteBatch spriteBatch)
         {
