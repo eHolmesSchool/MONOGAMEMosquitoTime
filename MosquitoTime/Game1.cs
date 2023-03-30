@@ -17,7 +17,7 @@ namespace MosquitoTime
         private Texture2D enemyProjectileTexture;
 
         GameState currentGameState = GameState.Start;
-        Level currentLevel = Level.Level1;
+        Level currentLevel = Level.Level1; ///            /////////                //////
 
         Transform playerTransform;
         Sprite playerSprite;
@@ -40,9 +40,8 @@ namespace MosquitoTime
         public List<Projectile> PlayerProjectileList = new List<Projectile>(); //Remember, at GameState.Initialize, run the loop that fills this list
         int playerProjectileCount = 4;
 
-        List<Projectile> EnemyProjectileList = new List<Projectile>();
+        public List<Projectile> EnemyProjectileList = new List<Projectile>();
         int enemyProjectileCount = 4;
-
 
         public Game1()
         {
@@ -112,6 +111,8 @@ namespace MosquitoTime
                     {
                         EnemyProjectileList.Add(new Projectile(enemyProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), enemyProjectileVeloX, enemyProjectileVeloY));
                     }
+
+
 
                     currentGameState = GameState.Playing;
                     break;
