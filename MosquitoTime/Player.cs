@@ -32,7 +32,6 @@ namespace MosquitoTime
         int currentAmmo;
 
         //PlayerUpgradeState upgradeState;
-        ObjectState currentplayerState = ObjectState.Alive;
 
         public Player(Sprite sprite, Transform transform, List<Projectile> playerBullets) : base(sprite, transform)  // Ask Angelo how Controls work SOLVED ON MY OWN HELL YEAH
         {
@@ -40,26 +39,23 @@ namespace MosquitoTime
             _transform = transform;
             _playerBullets = playerBullets;
 
-
             velocity = 4f;
 
+            currentState = ObjectState.Alive;
             playerControls = new Controls(Keys.D, Keys.A, Keys.W); //no multiplayer (Right, Left, Fire)
         }
 
-        public new void Update(GameTime gameTime)
+        public new void Update(GameTime gameTime)//new keyword required since this and Base.Update have identical parameters
         {
             base.Update(gameTime); ///////////
 
-
             kbs = Keyboard.GetState();
 
-
-            switch (currentplayerState)
+            switch (currentState)
             {
                 case ObjectState.Alive:
                     PlayerMove();
                     PlayerFire();
-                    
                     break;
                 case ObjectState.Hit:
                     break;
@@ -73,16 +69,6 @@ namespace MosquitoTime
 
             prevKbs = Keyboard.GetState();
         }
-
-        /*
-         * 
-         * 
-         * 
-         *
-         *
-         *
-         */
-
 
         public void PlayerMove()
         {

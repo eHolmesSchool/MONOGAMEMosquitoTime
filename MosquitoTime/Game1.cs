@@ -47,7 +47,7 @@ namespace MosquitoTime
         int playerProjectileCount = 4;
 
         public List<Projectile> EnemyProjectileList = new List<Projectile>();
-        int enemyProjectileCount = 6;
+        int enemyProjectileCount = 10;
 
         public List<Enemy> EnemyList = new List<Enemy>();
         int enemyCount = 10;
@@ -73,7 +73,7 @@ namespace MosquitoTime
 
             playerSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
             playerTransform = new Transform(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight - playerSprite.Bounds.Height-26), Vector2.Zero, 0, 1);
-            playerObject = new Player(playerSprite, playerTransform, PlayerProjectileList); /////
+            playerObject = new Player(playerSprite, playerTransform, PlayerProjectileList); ///// This is here because we Dont have a list of Players
 
             enemySprite = new Sprite(enemyTexture, enemyTexture.Bounds, 1);
             enemyTransform = new Transform(new Vector2(20,20), Vector2.Zero, 0, 1);
@@ -103,7 +103,6 @@ namespace MosquitoTime
             barrierTexture = Content.Load<Texture2D>("pile-of-bricks");
             // TODO: use this.Content to load your game content here
         }
-
 
         protected override void Update(GameTime gameTime)
         {
@@ -146,16 +145,12 @@ namespace MosquitoTime
             base.Update(gameTime);
         }
 
-
-
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
 
             // TODO: Add your drawing code here
-
-
             switch (currentGameState)
             {
                 case GameState.Start:
@@ -176,6 +171,7 @@ namespace MosquitoTime
                 default:
                     break;
             }
+
             _spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -196,7 +192,7 @@ namespace MosquitoTime
 
             for (int enemyIndex = 0; enemyIndex < enemyCount; enemyIndex++) //Enemies
             {
-                EnemyList.Add(new Enemy(enemySprite, new Transform(new Vector2(enemyTransform.Position.X + (enemyIndex * 30), enemyTransform.Position.Y + (enemyIndex * 30)), Vector2.Zero, 0f, 1f)));
+                EnemyList.Add(new Enemy(enemySprite, new Transform(new Vector2(enemyTransform.Position.X + (enemyIndex * 30), enemyTransform.Position.Y + (enemyIndex * 30)), Vector2.Zero, 0f, 1f), EnemyProjectileList));
             }
 
             for (int barrierIndex = 0; barrierIndex < barrierCount; barrierIndex++)
@@ -207,8 +203,14 @@ namespace MosquitoTime
 
         private void AddListsOfCollidableObjectsToEachObject()
         {
-            
             //add nested switch case that takes in Level1, Level2 etc.
+
+
+            foreach (GameObject obj in EnemyProjectileList)
+            {
+                playerObject._collidableObjects.Add(obj);
+            }
+
             for (int listIndex = 0; listIndex < PlayerProjectileList.Count; listIndex++)
             {//Player Projectiles have a reaction when they collide with Enemies and Barriers. 
                 foreach (GameObject obj in EnemyList)
@@ -252,13 +254,13 @@ namespace MosquitoTime
         {
             List<GameObject> AllList = new List<GameObject>();
 
+
             AllList.Add(playerObject);
-
-
             AllList.AddRange(EnemyList);
             AllList.AddRange(EnemyProjectileList);
             AllList.AddRange(PlayerProjectileList);
             AllList.AddRange(EnemyList);
+
 
             foreach (GameObject OGobj in AllList)
             {
@@ -278,7 +280,11 @@ namespace MosquitoTime
 
         private void AllTheDrawing(SpriteBatch spriteBatch)
         {
-            playerObject.Draw(spriteBatch);///////////////////////////////////
+
+            if (playerObject.currentState == GameObject.ObjectState.Alive)
+            {
+                playerObject.Draw(spriteBatch);///////////////////////////////////
+            }
 
             foreach (Enemy enemy in EnemyList)
             {
@@ -288,14 +294,17 @@ namespace MosquitoTime
                 }
             }
 
-            /*foreach Projetile in Enemy Projectiles
-             * if ProjectileStatus = Alive
-             * projectile.Draw()
-             */
+            foreach (Projectile enemyProjectiles in EnemyProjectileList)
+            {
+                if (enemyProjectiles.currentState == GameObject.ObjectState.Alive)
+                {
+                    enemyProjectiles.Draw(spriteBatch);
+                }
+            }
 
             foreach (Projectile playerProjectile in PlayerProjectileList)
             {
-                if (playerProjectile.currentState == Projectile.ObjectState.Alive)
+                if (playerProjectile.currentState == GameObject.ObjectState.Alive)
                 {
                     playerProjectile.Draw(spriteBatch);
                 }
@@ -320,8 +329,10 @@ namespace MosquitoTime
             }
             foreach (Projectile projectile in EnemyProjectileList)
             {
-                projectile.Update(gameTime);
-            }
+                projectile.Update(gameTime, new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight));
+            } //You HAVE to put in the extra Vector2 Parameter into your projectiles, even if you dont use it
+              //Otherwise, it will use the Base GameObject Update since the parameters match up.
+              //Thus, we will never run the TranslatePosition part of the Projectiles Update function.
 
             foreach (Barrier bar in BarrierList)
             {
@@ -345,6 +356,5 @@ namespace MosquitoTime
             Level1,
             Level2,
         }
-
     }
 }

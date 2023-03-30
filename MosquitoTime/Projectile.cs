@@ -31,16 +31,16 @@ namespace MosquitoTime
 
         public void Update(GameTime gameTime, Vector2 windowDimensions)
         {
-            base.Update(gameTime); ///////////
+            base.Update(gameTime); ///// We call the base GameObject update As Well as our Child Shenanigans /////
 
             switch (currentState)
             {
                 case ObjectState.Alive:
-                    ProjectileMove();
+                    _transform.TranslatePosition(new Vector2(_velocityX, _velocityY));
                     OutOfBoundsCheck(windowDimensions);
                     break;
                 case ObjectState.Dead:
-                    //Make It NOT Draw while dead and DO draw while alive  DONE
+                    //Make It NOT Draw while dead and DO draw while alive       DONE
                     break;
                 default:
                     break;
@@ -55,7 +55,7 @@ namespace MosquitoTime
             }
         }
 
-        public void Initialize()                                     //Initialize the projectiles in GameState.Init
+        public void Initialize()             //Initialize the projectiles in GameState.Init
         {
             currentState = ObjectState.Dead;
             _transform.Position = Vector2.Zero;
@@ -65,11 +65,6 @@ namespace MosquitoTime
         {
             _transform.Position = Position;
             currentState = ObjectState.Alive;
-        }
-
-        public void ProjectileMove()
-        {
-            _transform.TranslatePosition(new Vector2(_velocityX, _velocityY));
         }
     }
 }

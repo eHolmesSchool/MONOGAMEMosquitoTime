@@ -20,22 +20,23 @@ namespace MosquitoTime
 
         float rightmostWall = 600;
 
+        List<Projectile> _enemyProjectiles= new List<Projectile>();
+
         //EnemyUpgradeState currentEnemyUpgradeState = EnemyUpgradeState.None;
         EnemyMovementState currentMovementState = EnemyMovementState.Right;
 
-        public Enemy(Sprite sprite, Transform transform) : base(sprite, transform) 
+        public Enemy(Sprite sprite, Transform transform, List<Projectile> enemyProjectiles) : base(sprite, transform) 
         {
             _sprite = sprite;
             _transform = transform;
+            _enemyProjectiles = enemyProjectiles;
 
             currentState = ObjectState.Alive;
         }
 
-
         public new void Update(GameTime gameTime)
         {
-            base.Update(gameTime); ///////////
-
+            base.Update(gameTime);  ///////        ///////////
 
             switch (currentState)
             {
@@ -53,8 +54,6 @@ namespace MosquitoTime
                     break;
             }
         }
-
-
 
         public void EnemyMove()
         {
@@ -85,12 +84,18 @@ namespace MosquitoTime
                 //dont move
             }
         }
+
         public void EnemyFire()
         {
-            //Instantiate an Enemy Projectile
+            foreach (Projectile bullet in _enemyProjectiles)
+            {
+                if (bullet.currentState == ObjectState.Dead)
+                {
+                    bullet.Activate(new Vector2(_sprite.Bounds.X + (_sprite.Bounds.Width / 2) - 2, _transform.Position.Y));
+                    break;
+                }
+            }
         }
-
-
 
 
         public enum EnemyUpgradeState
