@@ -31,7 +31,7 @@ namespace MosquitoTime
         int maxPlayerAmmo;
 
         //PlayerUpgradeState upgradeState;
-        PlayerState currentplayerState = PlayerState.Alive;
+        ObjectState currentplayerState = ObjectState.Alive;
 
 
         public Player(Sprite sprite, Transform transform, List<Projectile> playerBullets) : base(sprite, transform)  // Ask Angelo how Controls work SOLVED ON MY OWN HELL YEAH
@@ -56,16 +56,16 @@ namespace MosquitoTime
 
             switch (currentplayerState)
             {
-                case PlayerState.Alive:
+                case ObjectState.Alive:
                     PlayerMove();
                     PlayerFire();
                     
                     break;
-                case PlayerState.Hit:
+                case ObjectState.Hit:
                     break;
-                case PlayerState.Dying:
+                case ObjectState.Dying:
                     break;
-                case PlayerState.Dead:
+                case ObjectState.Dead:
                     break;
                 default:
                     break;
@@ -108,7 +108,7 @@ namespace MosquitoTime
             {//Instantiate a moving Bullet
                 foreach (Projectile bullet in _playerBullets)
                 {
-                    if (bullet.currentProjectileState == Projectile.ProjectileState.Dead)
+                    if (bullet.currentState == GameObject.ObjectState.Dead)
                     {
                         bullet.Activate(new Vector2(_sprite.Bounds.X + (_sprite.Bounds.Width / 2) - 2, _transform.Position.Y));
                         break;
@@ -135,13 +135,5 @@ namespace MosquitoTime
     public enum PlayerUpgradeState
     {
         None = 0,
-    }
-
-    public enum PlayerState
-    {
-        Alive,
-        Hit,
-        Dying,
-        Dead
     }
 }

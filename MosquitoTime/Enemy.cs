@@ -20,14 +20,15 @@ namespace MosquitoTime
 
         float rightmostWall = 600;
 
-        /////////EnemyUpgradeState currentEnemyUpgradeState = EnemyUpgradeState.None;
-        public EnemyState currentState = EnemyState.Alive;
+        //EnemyUpgradeState currentEnemyUpgradeState = EnemyUpgradeState.None;
         EnemyMovementState currentMovementState = EnemyMovementState.Right;
 
-        public Enemy(Sprite sprite, Transform transform) : base(sprite, transform)
+        public Enemy(Sprite sprite, Transform transform) : base(sprite, transform) 
         {
             _sprite = sprite;
             _transform = transform;
+
+            currentState = ObjectState.Alive;
         }
 
 
@@ -38,15 +39,15 @@ namespace MosquitoTime
 
             switch (currentState)
             {
-                case EnemyState.Alive:
+                case ObjectState.Alive:
                     EnemyMove();
                     EnemyFire();
                     break;
-                case EnemyState.Hit:
+                case ObjectState.Hit:
                     break;
-                case EnemyState.Dying:
+                case ObjectState.Dying:
                     break;
-                case EnemyState.Dead:
+                case ObjectState.Dead:
                     break;
                 default:
                     break;
@@ -91,23 +92,6 @@ namespace MosquitoTime
 
 
 
-
-
-
-
-
-
-
-
-
-        public enum EnemyState
-        {
-            None,
-            Alive,
-            Hit,
-            Dying,
-            Dead,
-        }
 
         public enum EnemyUpgradeState
         {//0, 1, 2, 4, 8, 16   this is done so we can have the ability to represent combinations of states as additions of multiple numbers together

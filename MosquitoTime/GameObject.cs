@@ -17,6 +17,8 @@ namespace MosquitoTime
 
         public List<GameObject> _collidableObjects;
 
+        public ObjectState currentState = ObjectState.None;
+
         public GameObject(Sprite sprite, Transform transform)
         {
             _sprite = sprite;
@@ -44,6 +46,16 @@ namespace MosquitoTime
         public void Draw(SpriteBatch spriteBatch)
         {
             _sprite.Draw(spriteBatch);
+        }
+
+
+        public enum ObjectState
+        {
+            None,
+            Alive,
+            Hit,
+            Dying,
+            Dead
         }
     }
 
@@ -96,4 +108,7 @@ namespace MosquitoTime
             return false;
         }
     }
+
+
+
 }

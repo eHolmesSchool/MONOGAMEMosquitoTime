@@ -20,7 +20,7 @@ namespace MosquitoTime
         private Texture2D barrierTexture;
 
         GameState currentGameState = GameState.Start;
-        Level currentLevel = Level.None; ///            /////////                //////
+        Level currentLevel = Level.None;     /////     /////     /////     /////     /////
 
         Transform playerTransform;
         Sprite playerSprite;
@@ -128,7 +128,7 @@ namespace MosquitoTime
                     playerObject.Update(gameTime); /////We only have to pass in the list once at the beginning
 
                     AllTheUpdates(gameTime);
-
+                    AllTheCollisionChecks();
 
                     //If caps button pressed, go to pause
                     //If player is hit, go to Game Over
@@ -142,13 +142,12 @@ namespace MosquitoTime
                     break;
             }
 
-
             // TODO: Add your update logic here
             base.Update(gameTime);
-
-
-
         }
+
+
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -180,9 +179,6 @@ namespace MosquitoTime
             _spriteBatch.End();
             base.Draw(gameTime);
         }
-
-
-
 
 
         private void InitAllLists()
@@ -252,13 +248,41 @@ namespace MosquitoTime
             }
         }
 
+        private void AllTheCollisionChecks()
+        {
+            List<GameObject> AllList = new List<GameObject>();
+
+            AllList.Add(playerObject);
+
+
+            AllList.AddRange(EnemyList);
+            AllList.AddRange(EnemyProjectileList);
+            AllList.AddRange(PlayerProjectileList);
+            AllList.AddRange(EnemyList);
+
+            foreach (GameObject OGobj in AllList)
+            {
+                foreach (GameObject collisionCheckedObj in OGobj._collidableObjects)
+                {
+                    if (OGobj.currentState == GameObject.ObjectState.Alive)
+                    {
+                        if (OGobj.OnCollide(collisionCheckedObj._sprite.Bounds))
+                        {
+                            OGobj.currentState = GameObject.ObjectState.Dead;
+                        }
+                    }
+
+                }
+            }
+        }
+
         private void AllTheDrawing(SpriteBatch spriteBatch)
         {
             playerObject.Draw(spriteBatch);///////////////////////////////////
 
             foreach (Enemy enemy in EnemyList)
             {
-                if (enemy.currentState == Enemy.EnemyState.Alive)
+                if (enemy.currentState == Enemy.ObjectState.Alive)
                 {
                     enemy.Draw(spriteBatch);
                 }
@@ -271,7 +295,7 @@ namespace MosquitoTime
 
             foreach (Projectile playerProjectile in PlayerProjectileList)
             {
-                if (playerProjectile.currentProjectileState == Projectile.ProjectileState.Alive)
+                if (playerProjectile.currentState == Projectile.ObjectState.Alive)
                 {
                     playerProjectile.Draw(spriteBatch);
                 }
@@ -304,7 +328,6 @@ namespace MosquitoTime
                 bar.Update(gameTime);
             }
         }
-
 
 
         public enum GameState

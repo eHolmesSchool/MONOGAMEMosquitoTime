@@ -16,6 +16,8 @@ namespace MosquitoTime
         {
             _sprite = sprite;
             _transform = transform;
+
+            currentState = ObjectState.Alive;
         }
     }
 }
