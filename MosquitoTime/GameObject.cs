@@ -15,6 +15,8 @@ namespace MosquitoTime
         public Sprite _sprite;
         public Transform _transform;
 
+        public List<GameObject> _collidableObjects;
+
         public GameObject(Sprite sprite, Transform transform)
         {
             _sprite = sprite;
