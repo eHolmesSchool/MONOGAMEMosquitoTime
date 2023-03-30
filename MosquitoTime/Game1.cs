@@ -47,10 +47,10 @@ namespace MosquitoTime
         int playerProjectileCount = 4;
 
         public List<Projectile> EnemyProjectileList = new List<Projectile>();
-        int enemyProjectileCount = 10;
+        int enemyProjectileCount = 5;
 
         public List<Enemy> EnemyList = new List<Enemy>();
-        int enemyCount = 10;
+        int enemyCount = 5;
 
         public List<Barrier> BarrierList = new List<Barrier>();
         int barrierCount = 2;
@@ -80,7 +80,7 @@ namespace MosquitoTime
 
             playerProjectileSprite = new Sprite(playerProjectileTexture, playerProjectileTexture.Bounds, 1);
             playerProjectileVeloX = 0f;// negative because these move upwards
-            playerProjectileVeloY = -2f;
+            playerProjectileVeloY = -4f;
 
             enemyProjectileSprite = new Sprite(enemyProjectileTexture, enemyProjectileTexture.Bounds, 1);
             enemyProjectileVeloX = 0f; // positive because these move downwards
