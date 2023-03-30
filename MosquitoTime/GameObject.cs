@@ -109,6 +109,11 @@ namespace MosquitoTime
             Position += offset;
         }
 
+        public void TransformPosition(Vector2 newPos)
+        {
+            Position = newPos;
+        }
+
         public bool CheckBounds(Sprite sprite)
         {                                              //////////////////////////////////////////collision   (?)
             return false;

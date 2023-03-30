@@ -12,6 +12,8 @@ namespace MosquitoTime
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private SpriteFont arial;
+
         private Texture2D backgroundTexture;
         private Texture2D playerCannonTexture;
         private Texture2D playerProjectileTexture;
@@ -41,6 +43,10 @@ namespace MosquitoTime
 
         Transform barrierTransform;
         Sprite barrierSprite;
+
+        Transform textTransform;
+        string textMessage;
+
 
 
         public List<Projectile> PlayerProjectileList = new List<Projectile>(); //Remember, at GameState.Initialize, run the loop that fills this list
@@ -90,6 +96,9 @@ namespace MosquitoTime
 
             barrierSprite = new Sprite(barrierTexture, barrierTexture.Bounds, 1);
             barrierTransform = new Transform(new Vector2(75, 350), Vector2.Zero, 0, 1);
+
+            textTransform = new Transform();
+            textMessage = "Hello World!";
         }
 
         protected override void LoadContent()
@@ -101,6 +110,7 @@ namespace MosquitoTime
             playerProjectileTexture = Content.Load<Texture2D>("CannonBall");
             enemyProjectileTexture = Content.Load<Texture2D>("Fireball");
             barrierTexture = Content.Load<Texture2D>("pile-of-bricks");
+            arial = Content.Load<SpriteFont>("Arial");
             // TODO: use this.Content to load your game content here
         }
 
@@ -109,15 +119,15 @@ namespace MosquitoTime
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {Exit();}
 
-
             switch (currentGameState)
             {
                 case GameState.Start:
+                    //Display Starter screen
                     currentGameState = GameState.InitLevel;
                     break;
                 case GameState.InitLevel:
 
-                    InitAllLists();
+                    InitAll();
                     AddListsOfCollidableObjectsToEachObject();
 
                     currentGameState = GameState.Playing;
@@ -129,7 +139,7 @@ namespace MosquitoTime
                     AllTheUpdates(gameTime);
                     AllTheCollisionChecks();
 
-                    //If caps button pressed, go to pause
+                    //If caps button pressed, go to paused
                     //If player is hit, go to Game Over
                     //If player kills all enemies, set current Level to 2 and go to Init level
                     break;
@@ -140,7 +150,6 @@ namespace MosquitoTime
                 default:
                     break;
             }
-
             // TODO: Add your update logic here
             base.Update(gameTime);
         }
@@ -177,7 +186,7 @@ namespace MosquitoTime
         }
 
 
-        private void InitAllLists()
+        private void InitAll()
         {
             //add nested switch case that takes in Level1, Level2 etc.
             for (int projectileIndex = 0; projectileIndex < playerProjectileCount; projectileIndex++) //Player Projectiles
@@ -199,6 +208,8 @@ namespace MosquitoTime
             {
                 BarrierList.Add(new Barrier(barrierSprite, new Transform(new Vector2(barrierTransform.Position.X + (barrierIndex * 300), barrierTransform.Position.Y), Vector2.Zero, 0f, 1f)));
             }
+
+
         }
 
         private void AddListsOfCollidableObjectsToEachObject()
