@@ -46,7 +46,7 @@ namespace MosquitoTime
             playerControls = new Controls(Keys.D, Keys.A, Keys.W); //no multiplayer (Right, Left, Fire)
         }
 
-        public new void Update(GameTime gameTime, List<Projectile> playerBullets)
+        public new void Update(GameTime gameTime)
         {
             base.Update(gameTime); ///////////
 
