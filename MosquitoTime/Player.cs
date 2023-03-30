@@ -50,13 +50,16 @@ namespace MosquitoTime
         {
             base.Update(gameTime); ///////////
 
+
             kbs = Keyboard.GetState();
+
 
             switch (currentplayerState)
             {
                 case PlayerState.Alive:
                     PlayerMove();
                     PlayerFire();
+                    
                     break;
                 case PlayerState.Hit:
                     break;
@@ -67,6 +70,8 @@ namespace MosquitoTime
                 default:
                     break;
             }
+
+            prevKbs = Keyboard.GetState();
         }
 
         /*
@@ -99,7 +104,7 @@ namespace MosquitoTime
 
         public void PlayerFire()
         {
-            if (kbs.IsKeyDown(playerControls.fireGunButton))
+            if (kbs.IsKeyDown(playerControls.fireGunButton) && !prevKbs.IsKeyDown(playerControls.fireGunButton))
             {//Instantiate a moving Bullet
                 foreach (Projectile bullet in _playerBullets)
                 {

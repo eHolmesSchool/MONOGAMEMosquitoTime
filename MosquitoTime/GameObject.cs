@@ -58,7 +58,7 @@ namespace MosquitoTime
 
         public void UpdateBounds(Transform transform)
         {                    //Changes the location of the visual sprite based on a passed-in rectangle   (?)
-            Bounds = new Rectangle(transform.Position.ToPoint(), Bounds.Size);
+            Bounds = new Rectangle(transform.Position.ToPoint()s, Bounds.Size);
         }
 
         public void Draw(SpriteBatch spriteBatch)
