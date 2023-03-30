@@ -41,6 +41,12 @@ namespace MosquitoTime
         public void Update(GameTime gameTime)
         {
             //_transform.CheckBounds(_sprite);
+
+            if(currentState == ObjectState.Dead)
+            {
+                _transform.Position = new Vector2(-100, -100);
+            }
+
             _sprite.UpdateBounds(_transform); 
         }
         public void Draw(SpriteBatch spriteBatch)
