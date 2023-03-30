@@ -40,9 +40,10 @@ namespace MosquitoTime
         int playerProjectileCount = 4;
 
         public List<Projectile> EnemyProjectileList = new List<Projectile>();
-        int enemyProjectileCount = 4;
+        int enemyProjectileCount = 6;
 
         public List<Enemy> EnemyList = new List<Enemy>();
+        int enemyEnemyCount = 3;
 
         public Game1()
         {
@@ -112,9 +113,9 @@ namespace MosquitoTime
                         EnemyProjectileList.Add(new Projectile(enemyProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), enemyProjectileVeloX, enemyProjectileVeloY));
                     }
 
-                    for (int EnemyIndex = 0; EnemyIndex < enemyProjectileCount; EnemyIndex++) //Enemies
+                    for (int EnemyIndex = 0; EnemyIndex < enemyEnemyCount; EnemyIndex++) //Enemies
                     {
-                        EnemyList.Add(new Enemy(enemySprite, enemyTransform));
+                        EnemyList.Add(new Enemy(enemySprite, new Transform(new Vector2(enemyTransform.Position.X + (EnemyIndex * 30), enemyTransform.Position.Y + (EnemyIndex * 30)),Vector2.Zero, 0f, 1f)));
                     }
 
                     currentGameState = GameState.Playing;

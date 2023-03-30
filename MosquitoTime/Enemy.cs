@@ -13,13 +13,6 @@ namespace MosquitoTime
 {
     public class Enemy : GameObject
     {
-
-        Texture2D playerTexture; //covered by GameObject
-        Rectangle playerRectangle; //covered by GameObject
-        Vector2 playerPosition; //covered by GameObject
-        Vector2 playerDirection; //covered by GameObject
-
-
         //Projectile enemyBullet;
 
         float velocityX = 4f;
@@ -27,18 +20,11 @@ namespace MosquitoTime
 
         float rightmostWall = 600;
 
-        int currentPlayerHealth;
-        int maxPlayerHealth;
-        float fireRate;
-        int currentPlayerAmmo;
-        int maxPlayerAmmo;
-
-
         /////////EnemyUpgradeState currentEnemyUpgradeState = EnemyUpgradeState.None;
         public EnemyState currentState = EnemyState.Alive;
         EnemyMovementState currentMovementState = EnemyMovementState.Right;
 
-        public Enemy(Sprite sprite, Transform transform) : base(sprite, transform)  // Ask Angelo how Controls work SOLVED ON MY OWN HELL YEAH
+        public Enemy(Sprite sprite, Transform transform) : base(sprite, transform)
         {
             _sprite = sprite;
             _transform = transform;
