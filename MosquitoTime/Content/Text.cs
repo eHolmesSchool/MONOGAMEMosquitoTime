@@ -8,5 +8,6 @@ namespace MosquitoTime.Content
 {
     public class Text
     {
+
     }
 }
