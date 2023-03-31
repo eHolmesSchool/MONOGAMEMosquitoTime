@@ -102,7 +102,7 @@ namespace MosquitoTime
             barrierTransform = new Transform(new Vector2(75, 350), Vector2.Zero, 0, 1);
 
             textTransform = new Text.Transform(new Vector2(75, 30), Vector2.Zero, 0, 1);
-            textMessage = "Hello World!";
+            textMessage = playerObject.currentPlayerHealth.ToString();
         }
 
         protected override void LoadContent()
@@ -351,6 +351,9 @@ namespace MosquitoTime
             {
                 bar.Update(gameTime);
             }
+
+            //foreach (Text text in TextList)
+            playerLifeCounter._text = playerObject.currentPlayerHealth.ToString();
 
         }
 

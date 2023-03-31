@@ -12,8 +12,8 @@ namespace MosquitoTime
 {
     public class Player : GameObject
     {
-        int maxPlayerHealth;
-        int currentPlayerHealth;   
+        public int maxPlayerHealth;
+        public int currentPlayerHealth;   
         float fireRate;             //Not used in this version
 
         Controls playerControls = new Controls();
