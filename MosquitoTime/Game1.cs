@@ -45,10 +45,10 @@ namespace MosquitoTime
         Transform barrierTransform;
         Sprite barrierSprite;
 
-        Text.Transform textTransform;
-        string textMessage;
-        Vector2 textOffset = new Vector2(45, 30);
 
+        Text.Transform playerLifeCounterTransform;
+        string playerLifeCounterString;
+        Vector2 playerLifeCounterOffset = new Vector2(45, 30);
 
 
         public Text playerLifeCounter;
@@ -101,8 +101,8 @@ namespace MosquitoTime
             barrierSprite = new Sprite(barrierTexture, barrierTexture.Bounds, 1);
             barrierTransform = new Transform(new Vector2(75, 350), Vector2.Zero, 0, 1);
 
-            textTransform = new Text.Transform(new Vector2(75, 30), Vector2.Zero, 0, 1);
-            textMessage = playerObject.currentPlayerHealth.ToString();
+            playerLifeCounterTransform = new Text.Transform(new Vector2(75, 30), Vector2.Zero, 0, 1);
+            playerLifeCounterString = playerObject.currentPlayerHealth.ToString();
         }
 
         protected override void LoadContent()
@@ -192,7 +192,7 @@ namespace MosquitoTime
 
         private void InitAll()
         {
-            playerLifeCounter = new Text(arial,textMessage, textTransform);
+            playerLifeCounter = new Text(arial,playerLifeCounterString, playerLifeCounterTransform);
             //add nested switch case that takes in Level1, Level2 etc.
             for (int projectileIndex = 0; projectileIndex < playerProjectileCount; projectileIndex++) //Player Projectiles
             {
@@ -297,7 +297,7 @@ namespace MosquitoTime
                 playerObject.Draw(spriteBatch);///////////////////////////////////
             }
             //Drawing playerLifeCounter on near the player, offset by a set amount
-            spriteBatch.DrawString(playerLifeCounter._font, playerLifeCounter._text, playerObject._transform.Position + textOffset, Color.Black );
+            spriteBatch.DrawString(playerLifeCounter._font, playerLifeCounter._text, playerObject._transform.Position + playerLifeCounterOffset, Color.Black );
 
             foreach (Enemy enemy in EnemyList)
             {
