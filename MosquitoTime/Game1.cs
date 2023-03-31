@@ -272,7 +272,6 @@ namespace MosquitoTime
             AllList.AddRange(EnemyList);
             AllList.AddRange(EnemyProjectileList);
             AllList.AddRange(PlayerProjectileList);
-            AllList.AddRange(EnemyList);
 
 
             foreach (GameObject OGobj in AllList)

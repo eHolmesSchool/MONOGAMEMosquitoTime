@@ -53,7 +53,7 @@ namespace MosquitoTime
         {
             _sprite.Draw(spriteBatch);
         }
-        public void Collision()
+        public virtual void Collision()
         {
             currentState = ObjectState.Dead;
         }
@@ -118,11 +118,8 @@ namespace MosquitoTime
         }
 
         public bool CheckBounds(Sprite sprite)
-        {                                              //////////////////////////////////////////collision   (?)
+        {  
             return false;
         }
     }
-
-
-
 }

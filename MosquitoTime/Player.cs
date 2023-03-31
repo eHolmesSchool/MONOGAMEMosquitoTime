@@ -16,7 +16,6 @@ namespace MosquitoTime
         int currentPlayerHealth;   
         float fireRate;             //Not used in this version
 
-
         Controls playerControls = new Controls();
         float velocity; //shouldve been covered by GameObject but we did movement in Player this time
 
@@ -24,7 +23,6 @@ namespace MosquitoTime
 
         KeyboardState kbs;
         KeyboardState prevKbs; //used to fire a Single bullet per keypress
-
 
         List<Projectile> _playerBullets;
         int maxPlayerAmmo;          //Not used in this version
@@ -37,19 +35,19 @@ namespace MosquitoTime
             _sprite = sprite;
             _transform = transform;
             _playerBullets = playerBullets;
-
             
             ///// move everything below this line into an Initialize() function called by the constructor and the Init gamestate
             velocity = 4f;
 
             currentState = ObjectState.Alive;
-            playerControls = new Controls(Keys.D, Keys.A, Keys.W); //no multiplayer (Right, Left, Fire)
+            playerControls = new Controls(Keys.D, Keys.A, Keys.W); //no multiplayer so just standard controls (Right, Left, Fire)
 
             maxPlayerHealth = 3;
             currentPlayerHealth = maxPlayerHealth;
+            /////
         }
 
-        public new void Update(GameTime gameTime)//new keyword required since this and Base.Update have identical parameters
+        public new void Update(GameTime gameTime)//"new" keyword required since this and Base.Update have identical parameters
         {
             base.Update(gameTime); ///////////
 
@@ -71,7 +69,7 @@ namespace MosquitoTime
                     break;
             }
 
-            prevKbs = Keyboard.GetState();
+            prevKbs = kbs;
         }
 
         public void PlayerMove()
@@ -98,7 +96,7 @@ namespace MosquitoTime
             {//Instantiate a moving Bullet
                 foreach (Projectile bullet in _playerBullets)
                 {
-                    if (bullet.currentState == GameObject.ObjectState.Dead)
+                    if (bullet.currentState == ObjectState.Dead)
                     {
                         bullet.Activate(new Vector2(_sprite.Bounds.X + (_sprite.Bounds.Width / 2) - 2, _transform.Position.Y));
                         break;
@@ -107,12 +105,14 @@ namespace MosquitoTime
             }
         }
 
-        public new void Collision()
+        public override void Collision()
         {
+            
             currentPlayerHealth--;
+            Debug.WriteLine(currentPlayerHealth);
             if (currentPlayerHealth <= 0)
             {
-                currentState = GameObject.ObjectState.Dead;
+                currentState = ObjectState.Dead;
             }
         }
     }
