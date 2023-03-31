@@ -27,6 +27,7 @@ namespace MosquitoTime
 
         Transform playerTransform;
         Sprite playerSprite;
+        Controls playerControls;
         Player playerObject;
 
         Transform enemyTransform;
@@ -75,7 +76,10 @@ namespace MosquitoTime
 
         protected override void Initialize()
         {// TODO: Add your initialization logic here
-            base.Initialize(); //Runs the LoadContent() function       
+
+            base.Initialize(); //Runs the LoadContent() function
+
+            //LEVEL SWITCH STATEMENT HERE 
 
             _graphics.PreferredBackBufferWidth = 600;
             _graphics.PreferredBackBufferHeight = 500;
@@ -83,20 +87,22 @@ namespace MosquitoTime
 
             playerSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
             playerTransform = new Transform(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight - playerSprite.Bounds.Height-26), Vector2.Zero, 0, 1);
-            playerObject = new Player(playerSprite, playerTransform, PlayerProjectileList); ///// This is here because we Dont have a list of Players
+            playerControls = new Controls(Keys.D, Keys.A, Keys.W);
+            playerObject = new Player(playerSprite, playerTransform, PlayerProjectileList, playerControls); ///// This is here because we Dont have a list of Players
+            
 
             enemySprite = new Sprite(enemyTexture, enemyTexture.Bounds, 1);
-            enemyTransform = new Transform(new Vector2(20,20), Vector2.Zero, 0, 1);
+            enemyTransform = new Transform(new Vector2(20,20), Vector2.Zero, 0, 1); //change starting pos of enemies in diff levels
 
             playerProjectileSprite = new Sprite(playerProjectileTexture, playerProjectileTexture.Bounds, 1);
-            playerProjectileVeloX = 0f;// negative because these move upwards
+            playerProjectileVeloX = 0f; // negative because these move upwards
             playerProjectileVeloY = -4f;
 
             enemyProjectileSprite = new Sprite(enemyProjectileTexture, enemyProjectileTexture.Bounds, 1);
             enemyProjectileVeloX = 0f; // positive because these move downwards
             enemyProjectileVeloY = 2f;
-            specialEnemyProjectileVeloX = 1.5f; // Special enemies bullets move diagonally. May not use when I hand this in the first time but will use
-            specialEnemyProjectileVeloY = 1.5f; // if I am able to hand this in again for bonus marks later
+            specialEnemyProjectileVeloX = 1.5f; // Special enemies bullets move diagonally. May not use when I first hand in
+            specialEnemyProjectileVeloY = 1.5f; 
 
             barrierSprite = new Sprite(barrierTexture, barrierTexture.Bounds, 1);
             barrierTransform = new Transform(new Vector2(75, 350), Vector2.Zero, 0, 1);
@@ -127,10 +133,13 @@ namespace MosquitoTime
             {
                 case GameState.Start:
                     //Display Starter screen
+                    //Create a new Player
                     currentGameState = GameState.InitLevel;
                     break;
                 case GameState.InitLevel:
-
+                    //ADD SWITCH STATEMENT that covers each of the 2 levels
+                    //Case Level1 InitAll(playerLife, playerProjectileNumb, enemyProjectileNumb, enemyNumb, enemySpacing(vector2), barrierNumb, barrierSpacing(Vector2))
+                    //Case Level2 InitAll(etc...)
                     InitAll();
                     AddListsOfCollidableObjectsToEachObject();
 
@@ -192,6 +201,8 @@ namespace MosquitoTime
 
         private void InitAll()
         {
+            //add nested switch case that takes in Level1, Level2 etc. OR PUT THE SWITCH STATEMENT THING INTO
+
             playerLifeCounter = new Text(arial,playerLifeCounterString, playerLifeCounterTransform);
             //add nested switch case that takes in Level1, Level2 etc.
             for (int projectileIndex = 0; projectileIndex < playerProjectileCount; projectileIndex++) //Player Projectiles
@@ -218,7 +229,6 @@ namespace MosquitoTime
         private void AddListsOfCollidableObjectsToEachObject()
         {
             //add nested switch case that takes in Level1, Level2 etc.
-
 
             foreach (GameObject obj in EnemyProjectileList)
             {

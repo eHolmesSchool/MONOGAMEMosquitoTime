@@ -16,7 +16,7 @@ namespace MosquitoTime
         public int currentPlayerHealth;   
         float fireRate;             //Not used in this version
 
-        Controls playerControls = new Controls();
+        Controls _playerControls;
         float velocity; //shouldve been covered by GameObject but we did movement in Player this time
 
         float rightmostWall = 600;
@@ -30,17 +30,16 @@ namespace MosquitoTime
 
         //PlayerUpgradeState upgradeState;
 
-        public Player(Sprite sprite, Transform transform, List<Projectile> playerBullets) : base(sprite, transform)  // Ask Angelo how Controls work SOLVED ON MY OWN HELL YEAH
+        public Player(Sprite sprite, Transform transform, List<Projectile> playerBullets, Controls playerControls) : base(sprite, transform)  // Ask Angelo how Controls work SOLVED ON MY OWN HELL YEAH
         {
             _sprite = sprite;
             _transform = transform;
             _playerBullets = playerBullets;
-            
+            _playerControls = playerControls;
             ///// move everything below this line into an Initialize() function called by the constructor and the Init gamestate
             velocity = 4f;
 
             currentState = ObjectState.Alive;
-            playerControls = new Controls(Keys.D, Keys.A, Keys.W); //no multiplayer so just standard controls (Right, Left, Fire)
 
             maxPlayerHealth = 3;
             currentPlayerHealth = maxPlayerHealth;
@@ -81,7 +80,7 @@ namespace MosquitoTime
                     _transform.TranslatePosition(new Vector2(velocity, 0)); //////////////////Figuring out how to make it move          FIGURED OUT
                 }
             }
-            if (kbs.IsKeyDown(playerControls.negativeDirection))
+            if (kbs.IsKeyDown(_playerControls.negativeDirection))
             {//move left
                 if (_transform.Position.X - velocity! >= 0)
                 {
@@ -92,7 +91,7 @@ namespace MosquitoTime
 
         public void PlayerFire()
         {
-            if (kbs.IsKeyDown(playerControls.fireGunButton) && !prevKbs.IsKeyDown(playerControls.fireGunButton))
+            if (kbs.IsKeyDown(_playerControls.fireGunButton) && !prevKbs.IsKeyDown(_playerControls.fireGunButton))
             {//Instantiate a moving Bullet
                 foreach (Projectile bullet in _playerBullets)
                 {
