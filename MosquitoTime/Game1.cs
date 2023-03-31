@@ -23,7 +23,7 @@ namespace MosquitoTime
         private Texture2D barrierTexture;
 
         GameState currentGameState = GameState.Start;
-        Level currentLevel = Level.None;     /////     /////     /////     /////     /////
+        Level currentLevel = Level.None;/////     /////     /////     /////     /////     /////
 
         Transform playerTransform;
         Sprite playerSprite;
@@ -46,7 +46,7 @@ namespace MosquitoTime
         Transform barrierTransform;
         Sprite barrierSprite;
 
-
+        //All the Texts are Here. Not gonna organize these. Just letting them be the Ugly Ducklings of my code rn
         Text.Transform playerLifeCounterTransform;
         string playerLifeCounterString;
         Vector2 playerLifeCounterOffset = new Vector2(45, 30);
@@ -147,7 +147,7 @@ namespace MosquitoTime
                     break;
                 case GameState.Playing:
 
-                    playerObject.Update(gameTime); /////We only have to pass in the list once at the beginning
+                    playerObject.Update(gameTime); //We only have to pass in the list once at the beginning
 
                     AllTheUpdates(gameTime);
                     AllTheCollisionChecks();
@@ -201,7 +201,6 @@ namespace MosquitoTime
 
         private void InitAll()
         {
-            //add nested switch case that takes in Level1, Level2 etc. OR PUT THE SWITCH STATEMENT THING INTO
 
             playerLifeCounter = new Text(arial,playerLifeCounterString, playerLifeCounterTransform);
             //add nested switch case that takes in Level1, Level2 etc.
