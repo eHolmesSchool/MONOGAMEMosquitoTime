@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -25,8 +26,8 @@ namespace MosquitoTime
         KeyboardState prevKbs; //used to fire a Single bullet per keypress
 
         List<Projectile> _playerBullets;
-        int maxPlayerAmmo;          //Not used in this version
-        int currentAmmo;            //Not used in this version
+        int maxPlayerAmmo;          //Not used in this version  or rather, it Is, but not Here
+        int currentAmmo;            //Not used in this version  would be used for a ReLoad function
 
         //PlayerUpgradeState upgradeState;
 
@@ -36,14 +37,19 @@ namespace MosquitoTime
             _transform = transform;
             _playerBullets = playerBullets;
             _playerControls = playerControls;
+
             ///// move everything below this line into an Initialize() function called by the constructor and the Init gamestate
+            ///
+            PlayerInitializeDefaults();
+            /////
+        }
+
+        private void PlayerInitializeDefaults()
+        {
             velocity = 4f;
-
-            currentState = ObjectState.Alive;
-
             maxPlayerHealth = 3;
             currentPlayerHealth = maxPlayerHealth;
-            /////
+            currentState = ObjectState.Alive;
         }
 
         public new void Update(GameTime gameTime)//"new" keyword required since this and Base.Update have identical parameters
