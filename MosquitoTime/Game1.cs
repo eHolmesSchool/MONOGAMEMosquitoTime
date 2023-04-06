@@ -133,9 +133,22 @@ namespace MosquitoTime
             {
                 case GameState.Start:
                     //Display Starter screen
+
+
+
+                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    {
+
+
+
+                        currentGameState = GameState.InitLevel;
+                        currentLevel = Level.Level1;
+                        //Check if CLICKABLE Pressed
+                    }
+
                     //Wait until correct player Input
-                    currentGameState = GameState.InitLevel;
-                    currentLevel = Level.Level1;
+                    
+                    
                     break;
                 case GameState.InitLevel:
                     //ADD SWITCH STATEMENT that covers each of the 2 levels
@@ -157,7 +170,6 @@ namespace MosquitoTime
 
                             break;
                     }
-
 
                     AddListsOfCollidableObjectsToEachObject();
 
@@ -181,6 +193,7 @@ namespace MosquitoTime
                 default:
                     break;
             }
+
             // TODO: Add your update logic here
             base.Update(gameTime);
         }
@@ -194,6 +207,9 @@ namespace MosquitoTime
             switch (currentGameState)
             {
                 case GameState.Start:
+
+                    StartMenuDrawing(_spriteBatch);
+
                     break;
                 case GameState.InitLevel:
                     break;
@@ -215,6 +231,12 @@ namespace MosquitoTime
             _spriteBatch.End();
             base.Draw(gameTime);
         }
+
+
+
+
+
+
 
 
         private void InitAll(int playerProjectileCount, int enemyProjectileCount, int enemyCount, Vector2 enemySpacing, int barrierCount, Vector2 barrierSpacing)
@@ -357,6 +379,13 @@ namespace MosquitoTime
                 bar.Draw(spriteBatch);
             }
         }
+
+
+        private void StartMenuDrawing(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(arial, "GAMEING", new Vector2(100, 100), Color.Black);
+        }
+
 
         private void AllTheUpdates(GameTime gameTime)
         {
