@@ -28,7 +28,7 @@ namespace MosquitoTime
 
         public void Draw(SpriteBatch spriteBatch, SpriteFont font)
         {
-            spriteBatch.DrawString(font, _text, _rect.Center.ToVector2(), Color.Red);
+            spriteBatch.DrawString(font, _text, _rect.Location.ToVector2(), Color.Red);
         }
 
     }

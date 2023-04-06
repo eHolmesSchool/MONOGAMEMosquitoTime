@@ -71,6 +71,8 @@ namespace MosquitoTime
         Point clickableRectEnd;
         Clickable StartButton;
 
+        Clickable GameOverButton;
+
 
 
         public Game1()
@@ -117,12 +119,11 @@ namespace MosquitoTime
             playerLifeCounterString = playerObject.currentPlayerHealth.ToString();
 
 
-
-
-
-            clickableRectStart = new Point((_graphics.PreferredBackBufferWidth / 2) - 100, (_graphics.PreferredBackBufferHeight / 2) - 100);
-            clickableRectEnd = new Point((_graphics.PreferredBackBufferWidth / 2) + 100, (_graphics.PreferredBackBufferHeight / 2) + 100);
+            clickableRectStart = new Point((_graphics.PreferredBackBufferWidth / 2), (_graphics.PreferredBackBufferHeight / 2));
+            clickableRectEnd = new Point(73,35);
             StartButton = new Clickable(new Rectangle(clickableRectStart, clickableRectEnd), $"Click Here\nTo Start");
+
+            GameOverButton = new Clickable(new Rectangle(clickableRectStart, clickableRectEnd), $"Go Back\nTo Menu");
         }
 
         protected override void LoadContent()
@@ -146,22 +147,15 @@ namespace MosquitoTime
             switch (currentGameState)
             {
                 case GameState.Start:
-                    //Display Starter screen
-
-
-
+                    //Display Starter screen  DONE
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                     {
-
-
-
-                        currentGameState = GameState.InitLevel;
-                        currentLevel = Level.Level1;
-                        //Check if CLICKABLE Pressed
+                        if (StartButton.WasClicked(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)))
+                        {
+                            currentGameState = GameState.InitLevel;
+                            currentLevel = Level.Level1;
+                        }
                     }
-
-                    //Wait until correct player Input
-                    
                     break;
                 case GameState.InitLevel:
                     //ADD SWITCH STATEMENT that covers each of the 2 levels
@@ -169,12 +163,22 @@ namespace MosquitoTime
                     {
                         //InitAll(playerProjectileNumb, enemyProjectileNumb, enemyNumb, enemySpacing(vector2), barrierNumb, barrierSpacing(Vector2))
                         case Level.Level1:
+                            playerProjectileCount = 4;
+                            enemyProjectileCount = 5;
+                            enemyCount = 5;
+                            barrierCount = 2;
 
                             InitAll(playerProjectileCount, enemyProjectileCount, enemyCount, new Vector2(30, 30), barrierCount, new Vector2(300, 0));
 
                             break;
 
                         case Level.Level2:
+                            playerProjectileCount = 2;
+                            enemyProjectileCount = 10;
+                            enemyCount = 10;
+                            barrierCount = 0;
+
+                            InitAll(playerProjectileCount, enemyProjectileCount, enemyCount, new Vector2(-15, -15), barrierCount, new Vector2(0, 0));
 
                             break;
 
@@ -198,10 +202,39 @@ namespace MosquitoTime
                     //If caps button pressed, go to paused
                     //If player is hit, go to Game Over
                     //If player kills all enemies, set current Level to 2 and go to Init level
-                    break;
+
+                    if (playerObject.currentPlayerHealth <= 0)
+                    {
+                        currentLevel = Level.Level1;
+                        currentGameState = GameState.GameOver;
+                    }
+                    if (AliveEnemyCount(EnemyList)<=0)
+                    {
+                            Debug.Write("Dead ");
+
+                    //    if (currentLevel == Level.Level1)
+                    //    {
+                    //        currentLevel = Level.Level2;
+                    //        currentGameState = GameState.InitLevel;
+                    //    } else if (currentLevel == Level.Level2)
+                    //    {
+                    //        currentLevel = Level.Level1;
+                    //        currentGameState = GameState.Start;
+                    //    }
+                    }
+
+                        break;
                 case GameState.Paused:
                     break;
                 case GameState.GameOver:
+                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    {
+                        if (GameOverButton.WasClicked(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)))
+                        {
+                            currentGameState = GameState.InitLevel;
+                            currentLevel = Level.Level1;
+                        }
+                    }
                     break;
                 default:
                     break;
@@ -209,6 +242,19 @@ namespace MosquitoTime
 
             // TODO: Add your update logic here
             base.Update(gameTime);
+        }
+
+        private int AliveEnemyCount(List<Enemy> enemylist )
+        {
+            int Count = 0;
+            foreach (Enemy enemy in enemylist)
+            {
+                if (enemy.currentState == GameObject.ObjectState.Dead)
+                {
+                    Count++;
+                }
+            }
+            return Count;
         }
 
         protected override void Draw(GameTime gameTime)
@@ -236,6 +282,9 @@ namespace MosquitoTime
                 case GameState.Paused:
                     break;
                 case GameState.GameOver:
+
+                    StartGameOverDrawing(_spriteBatch, GameOverButton);
+
                     break;
                 default:
                     break;
@@ -244,13 +293,6 @@ namespace MosquitoTime
             _spriteBatch.End();
             base.Draw(gameTime);
         }
-
-
-
-
-
-
-
 
 
 
@@ -400,6 +442,12 @@ namespace MosquitoTime
         {
             spriteBatch.DrawString(arial, "BUG GAMEING", new Vector2(100, 100), Color.Black);
             StartButton.Draw(spriteBatch, arial);
+        }
+
+        private void StartGameOverDrawing(SpriteBatch spriteBatch, Clickable gameOverButton)
+        {
+            spriteBatch.DrawString(arial, "YOU LOST HAHA", new Vector2(400, 100), Color.Black);
+            gameOverButton.Draw(spriteBatch, arial);
         }
 
 
