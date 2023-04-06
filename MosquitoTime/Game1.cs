@@ -66,7 +66,6 @@ namespace MosquitoTime
         public List<Barrier> BarrierList = new List<Barrier>();
         int barrierCount = 2;
 
-
         Point clickableRectStart;
         Point clickableRectEnd;
         Clickable StartButton;
@@ -123,7 +122,7 @@ namespace MosquitoTime
             clickableRectEnd = new Point(73,35);
             StartButton = new Clickable(new Rectangle(clickableRectStart, clickableRectEnd), $"Click Here\nTo Start");
 
-            GameOverButton = new Clickable(new Rectangle(clickableRectStart, clickableRectEnd), $"Go Back\nTo Menu");
+            GameOverButton = new Clickable(new Rectangle(new Point(clickableRectStart.X - 100, clickableRectStart.Y - 100), clickableRectEnd), $"Go Back\nTo Menu");
         }
 
         protected override void LoadContent()
@@ -158,11 +157,13 @@ namespace MosquitoTime
                     }
                     break;
                 case GameState.InitLevel:
-                    //ADD SWITCH STATEMENT that covers each of the 2 levels
+                    UnInitAll();
                     switch (currentLevel)
                     {
                         //InitAll(playerProjectileNumb, enemyProjectileNumb, enemyNumb, enemySpacing(vector2), barrierNumb, barrierSpacing(Vector2))
                         case Level.Level1:
+                            playerObject.currentPlayerHealth = playerObject.maxPlayerHealth;
+
                             playerProjectileCount = 4;
                             enemyProjectileCount = 5;
                             enemyCount = 5;
@@ -173,6 +174,8 @@ namespace MosquitoTime
                             break;
 
                         case Level.Level2:
+                            playerObject.currentPlayerHealth = playerObject.maxPlayerHealth;
+
                             playerProjectileCount = 2;
                             enemyProjectileCount = 10;
                             enemyCount = 10;
@@ -189,7 +192,7 @@ namespace MosquitoTime
                     }
 
                     AddListsOfCollidableObjectsToEachObject();
-
+                    
                     currentGameState = GameState.Playing;
                     break;
                 case GameState.Playing:
@@ -210,7 +213,7 @@ namespace MosquitoTime
                     }
                     if (AliveEnemyCount(EnemyList)<=0)
                     {
-                            Debug.Write("Dead ");
+                            Debug.Write("WAWAWEEWA ");
 
                     //    if (currentLevel == Level.Level1)
                     //    {
@@ -227,11 +230,12 @@ namespace MosquitoTime
                 case GameState.Paused:
                     break;
                 case GameState.GameOver:
+                    playerObject.currentPlayerHealth = playerObject.maxPlayerHealth;
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                     {
                         if (GameOverButton.WasClicked(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)))
                         {
-                            currentGameState = GameState.InitLevel;
+                            currentGameState = GameState.Start;
                             currentLevel = Level.Level1;
                         }
                     }
@@ -247,8 +251,10 @@ namespace MosquitoTime
         private int AliveEnemyCount(List<Enemy> enemylist )
         {
             int Count = 0;
+            
             foreach (Enemy enemy in enemylist)
             {
+                Debug.WriteLine(enemy.currentState);
                 if (enemy.currentState == GameObject.ObjectState.Dead)
                 {
                     Count++;
@@ -299,7 +305,7 @@ namespace MosquitoTime
         private void InitAll(int playerProjectileCount, int enemyProjectileCount, int enemyCount, Vector2 enemySpacing, int barrierCount, Vector2 barrierSpacing)
         {
             playerLifeCounter = new Text(arial, playerLifeCounterString, playerLifeCounterTransform);
-
+            playerObject.PlayerInitializeDefaults();
             //Case Level1 InitAll(playerLife, playerProjectileNumb, enemyProjectileNumb, enemyNumb, enemySpacing(vector2), barrierNumb, barrierSpacing(Vector2))
 
             //add nested switch case that takes in Level1, Level2 etc. COVERED IN THE VARIABLES GIVEN IN AN EARLIER SWITCH
@@ -322,6 +328,15 @@ namespace MosquitoTime
             {
                 BarrierList.Add(new Barrier(barrierSprite, new Transform(barrierTransform.Position + (barrierSpacing*barrierIndex) , Vector2.Zero, 0f, 1f)));
             }
+        }
+
+        private void UnInitAll()
+        {
+
+            PlayerProjectileList.Clear();
+            EnemyProjectileList.Clear();
+            EnemyList.Clear();
+            BarrierList.Clear();
         }
 
         private void AddListsOfCollidableObjectsToEachObject()

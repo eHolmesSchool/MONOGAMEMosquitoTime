@@ -97,7 +97,6 @@ namespace MosquitoTime
             }
         }
 
-
         public enum EnemyUpgradeState
         {//0, 1, 2, 4, 8, 16   this is done so we can have the ability to represent combinations of states as additions of multiple numbers together
             None = 0, //Never will we have a situation where we add a number more than once. So any derivitave number (ex.7) can only be accomplished one way (7 = 1 + 2 + 4)

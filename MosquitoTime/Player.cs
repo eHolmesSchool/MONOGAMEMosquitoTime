@@ -44,7 +44,7 @@ namespace MosquitoTime
             /////
         }
 
-        private void PlayerInitializeDefaults()
+        public void PlayerInitializeDefaults()
         {
             velocity = 4f;
             maxPlayerHealth = 3;
@@ -112,7 +112,6 @@ namespace MosquitoTime
 
         public override void Collision()
         {
-            
             currentPlayerHealth--;
             Debug.WriteLine(currentPlayerHealth);
             if (currentPlayerHealth <= 0)
