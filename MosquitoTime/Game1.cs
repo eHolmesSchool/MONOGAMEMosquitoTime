@@ -67,6 +67,12 @@ namespace MosquitoTime
         int barrierCount = 2;
 
 
+        Point clickableRectStart;
+        Point clickableRectEnd;
+        Clickable StartButton;
+
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -109,6 +115,14 @@ namespace MosquitoTime
 
             playerLifeCounterTransform = new Text.Transform(new Vector2(75, 30), Vector2.Zero, 0, 1);
             playerLifeCounterString = playerObject.currentPlayerHealth.ToString();
+
+
+
+
+
+            clickableRectStart = new Point((_graphics.PreferredBackBufferWidth / 2) - 100, (_graphics.PreferredBackBufferHeight / 2) - 100);
+            clickableRectEnd = new Point((_graphics.PreferredBackBufferWidth / 2) + 100, (_graphics.PreferredBackBufferHeight / 2) + 100);
+            StartButton = new Clickable(new Rectangle(clickableRectStart, clickableRectEnd), $"Click Here\nTo Start");
         }
 
         protected override void LoadContent()
@@ -147,7 +161,6 @@ namespace MosquitoTime
                     }
 
                     //Wait until correct player Input
-                    
                     
                     break;
                 case GameState.InitLevel:
@@ -208,7 +221,7 @@ namespace MosquitoTime
             {
                 case GameState.Start:
 
-                    StartMenuDrawing(_spriteBatch);
+                    StartMenuDrawing(_spriteBatch, StartButton);/////     /////
 
                     break;
                 case GameState.InitLevel:
@@ -231,6 +244,8 @@ namespace MosquitoTime
             _spriteBatch.End();
             base.Draw(gameTime);
         }
+
+
 
 
 
@@ -381,9 +396,10 @@ namespace MosquitoTime
         }
 
 
-        private void StartMenuDrawing(SpriteBatch spriteBatch)
+        private void StartMenuDrawing(SpriteBatch spriteBatch, Clickable StartButton)
         {
-            spriteBatch.DrawString(arial, "GAMEING", new Vector2(100, 100), Color.Black);
+            spriteBatch.DrawString(arial, "BUG GAMEING", new Vector2(100, 100), Color.Black);
+            StartButton.Draw(spriteBatch, arial);
         }
 
 
