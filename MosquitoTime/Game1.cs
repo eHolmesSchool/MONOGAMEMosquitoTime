@@ -95,12 +95,12 @@ namespace MosquitoTime
             enemyTransform = new Transform(new Vector2(20, 20), Vector2.Zero, 0, 1); //change starting pos of enemies in diff levels
 
             playerProjectileSprite = new Sprite(playerProjectileTexture, playerProjectileTexture.Bounds, 1);
-            playerProjectileVeloX = 0f; // negative because these move upwards
-            playerProjectileVeloY = -4f;
+            playerProjectileVeloX = 0f; 
+            playerProjectileVeloY = -4f; // negative because these move upwards
 
             enemyProjectileSprite = new Sprite(enemyProjectileTexture, enemyProjectileTexture.Bounds, 1);
-            enemyProjectileVeloX = 0f; // positive because these move downwards
-            enemyProjectileVeloY = 2f;
+            enemyProjectileVeloX = 0f; 
+            enemyProjectileVeloY = 2f; // positive because these move downwards
             specialEnemyProjectileVeloX = 1.5f; // Special enemies bullets move diagonally. May not use when I first hand in
             specialEnemyProjectileVeloY = 1.5f;
 
@@ -135,6 +135,7 @@ namespace MosquitoTime
                     //Display Starter screen
                     //Wait until correct player Input
                     currentGameState = GameState.InitLevel;
+                    currentLevel = Level.Level1;
                     break;
                 case GameState.InitLevel:
                     //ADD SWITCH STATEMENT that covers each of the 2 levels
