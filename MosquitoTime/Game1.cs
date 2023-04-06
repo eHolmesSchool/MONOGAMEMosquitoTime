@@ -102,7 +102,6 @@ namespace MosquitoTime
             enemyProjectileVeloX = 0f; // positive because these move downwards
             enemyProjectileVeloY = 2f;
             specialEnemyProjectileVeloX = 1.5f; // Special enemies bullets move diagonally. May not use when I first hand in
-            specialEnemyProjectileVeloY = 1.5f; 
 
             barrierSprite = new Sprite(barrierTexture, barrierTexture.Bounds, 1);
             barrierTransform = new Transform(new Vector2(75, 350), Vector2.Zero, 0, 1);
@@ -141,6 +140,7 @@ namespace MosquitoTime
                     //Case Level1 InitAll(playerLife, playerProjectileNumb, enemyProjectileNumb, enemyNumb, enemySpacing(vector2), barrierNumb, barrierSpacing(Vector2))
                     //Case Level2 InitAll(etc...)
                     InitAll();
+
                     AddListsOfCollidableObjectsToEachObject();
 
                     currentGameState = GameState.Playing;
@@ -148,6 +148,7 @@ namespace MosquitoTime
                 case GameState.Playing:
 
                     playerObject.Update(gameTime); //We only have to pass in the list once at the beginning
+                    playerObject.Update(gameTime);
 
                     AllTheUpdates(gameTime);
                     AllTheCollisionChecks();
@@ -199,11 +200,13 @@ namespace MosquitoTime
         }
 
 
-        private void InitAll()
+        private void InitAll(int playerProjectileCount, int enemyProjectileCount, int enemyCount, Vector2 enemySpacing, int barrierCount, Vector2 barrierSpacing)
         {
+            playerLifeCounter = new Text(arial, playerLifeCounterString, playerLifeCounterTransform);
 
-            playerLifeCounter = new Text(arial,playerLifeCounterString, playerLifeCounterTransform);
-            //add nested switch case that takes in Level1, Level2 etc.
+            //Case Level1 InitAll(playerLife, playerProjectileNumb, enemyProjectileNumb, enemyNumb, enemySpacing(vector2), barrierNumb, barrierSpacing(Vector2))
+
+            //add nested switch case that takes in Level1, Level2 etc. COVERED IN THE VARIABLES GIVEN IN AN EARLIER SWITCH
             for (int projectileIndex = 0; projectileIndex < playerProjectileCount; projectileIndex++) //Player Projectiles
             {
                 PlayerProjectileList.Add(new Projectile(playerProjectileSprite, new Transform(Vector2.Zero, Vector2.Zero, 0f, 1f), playerProjectileVeloX, playerProjectileVeloY));
@@ -216,12 +219,12 @@ namespace MosquitoTime
 
             for (int enemyIndex = 0; enemyIndex < enemyCount; enemyIndex++) //Enemies
             {
-                EnemyList.Add(new Enemy(enemySprite, new Transform(new Vector2(enemyTransform.Position.X + (enemyIndex * 30), enemyTransform.Position.Y + (enemyIndex * 30)), Vector2.Zero, 0f, 1f), EnemyProjectileList));
+                EnemyList.Add(new Enemy(enemySprite, new Transform(enemyTransform.Position + (enemySpacing*enemyIndex), Vector2.Zero, 0f, 1f), EnemyProjectileList));
             }
 
             for (int barrierIndex = 0; barrierIndex < barrierCount; barrierIndex++)
             {
-                BarrierList.Add(new Barrier(barrierSprite, new Transform(new Vector2(barrierTransform.Position.X + (barrierIndex * 300), barrierTransform.Position.Y), Vector2.Zero, 0f, 1f)));
+                BarrierList.Add(new Barrier(barrierSprite, new Transform(barrierTransform.Position + (barrierSpacing*barrierIndex) , Vector2.Zero, 0f, 1f)));
             }
         }
 
@@ -306,7 +309,7 @@ namespace MosquitoTime
                 playerObject.Draw(spriteBatch);///////////////////////////////////
             }
             //Drawing playerLifeCounter on near the player, offset by a set amount
-            spriteBatch.DrawString(playerLifeCounter._font, playerLifeCounter._text, playerObject._transform.Position + playerLifeCounterOffset, Color.Black );
+            spriteBatch.DrawString(playerLifeCounter._font, playerLifeCounter._text, playerObject._transform.Position + playerLifeCounterOffset, Color.Black);
 
             foreach (Enemy enemy in EnemyList)
             {
@@ -363,7 +366,6 @@ namespace MosquitoTime
 
             //foreach (Text text in TextList)
             playerLifeCounter._text = playerObject.currentPlayerHealth.ToString();
-
         }
 
 
