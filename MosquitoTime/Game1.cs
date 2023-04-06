@@ -163,7 +163,6 @@ namespace MosquitoTime
                     break;
                 case GameState.Playing:
 
-                    playerObject.Update(gameTime); //We only have to pass in the list once at the beginning
                     playerObject.Update(gameTime);
 
                     AllTheUpdates(gameTime);
