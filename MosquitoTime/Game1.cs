@@ -142,6 +142,7 @@ namespace MosquitoTime
                     {
                         //InitAll(playerProjectileNumb, enemyProjectileNumb, enemyNumb, enemySpacing(vector2), barrierNumb, barrierSpacing(Vector2))
                         case Level.Level1:
+
                             InitAll(playerProjectileCount, enemyProjectileCount, enemyCount, new Vector2(30, 30), barrierCount, new Vector2(300, 0));
 
                             break;
