@@ -86,13 +86,13 @@ namespace MosquitoTime
             _graphics.ApplyChanges();
 
             playerSprite = new Sprite(playerCannonTexture, playerCannonTexture.Bounds, 1);
-            playerTransform = new Transform(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight - playerSprite.Bounds.Height-26), Vector2.Zero, 0, 1);
+            playerTransform = new Transform(new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight - playerSprite.Bounds.Height - 26), Vector2.Zero, 0, 1);
             playerControls = new Controls(Keys.D, Keys.A, Keys.W);
             playerObject = new Player(playerSprite, playerTransform, PlayerProjectileList, playerControls); ///// This is here because we Dont have a list of Players
-            
+
 
             enemySprite = new Sprite(enemyTexture, enemyTexture.Bounds, 1);
-            enemyTransform = new Transform(new Vector2(20,20), Vector2.Zero, 0, 1); //change starting pos of enemies in diff levels
+            enemyTransform = new Transform(new Vector2(20, 20), Vector2.Zero, 0, 1); //change starting pos of enemies in diff levels
 
             playerProjectileSprite = new Sprite(playerProjectileTexture, playerProjectileTexture.Bounds, 1);
             playerProjectileVeloX = 0f; // negative because these move upwards
@@ -102,6 +102,7 @@ namespace MosquitoTime
             enemyProjectileVeloX = 0f; // positive because these move downwards
             enemyProjectileVeloY = 2f;
             specialEnemyProjectileVeloX = 1.5f; // Special enemies bullets move diagonally. May not use when I first hand in
+            specialEnemyProjectileVeloY = 1.5f;
 
             barrierSprite = new Sprite(barrierTexture, barrierTexture.Bounds, 1);
             barrierTransform = new Transform(new Vector2(75, 350), Vector2.Zero, 0, 1);
@@ -126,20 +127,35 @@ namespace MosquitoTime
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {Exit();}
+            { Exit(); }
 
             switch (currentGameState)
             {
                 case GameState.Start:
                     //Display Starter screen
-                    //Create a new Player
+                    //Wait until correct player Input
                     currentGameState = GameState.InitLevel;
                     break;
                 case GameState.InitLevel:
                     //ADD SWITCH STATEMENT that covers each of the 2 levels
-                    //Case Level1 InitAll(playerLife, playerProjectileNumb, enemyProjectileNumb, enemyNumb, enemySpacing(vector2), barrierNumb, barrierSpacing(Vector2))
-                    //Case Level2 InitAll(etc...)
-                    InitAll();
+                    switch (currentLevel)
+                    {
+                        //InitAll(playerProjectileNumb, enemyProjectileNumb, enemyNumb, enemySpacing(vector2), barrierNumb, barrierSpacing(Vector2))
+                        case Level.Level1:
+                            InitAll(playerProjectileCount, enemyProjectileCount, enemyCount, new Vector2(30, 30), barrierCount, new Vector2(300, 0));
+
+                            break;
+
+                        case Level.Level2:
+
+                            break;
+
+                        default:
+                            InitAll(playerProjectileCount, enemyProjectileCount, enemyCount, new Vector2(30, 30), barrierCount, new Vector2(300, 0));
+
+                            break;
+                    }
+
 
                     AddListsOfCollidableObjectsToEachObject();
 
